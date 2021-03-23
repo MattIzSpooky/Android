@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.avans.assessment.ApiClient
 import com.avans.assessment.services.TestService
 
 class TestViewModel(ctx: Context) : ViewModel() {
