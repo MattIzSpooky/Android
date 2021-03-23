@@ -1,4 +1,4 @@
-package com.avans.assessment
+package com.avans.assessment.services
 
 import android.content.Context
 import com.android.volley.Request

@@ -14,6 +14,7 @@ import com.avans.assessment.viewmodels.BeerListViewModel
 fun HomeScreen(context: Context){
     val beerListViewModel = BeerListViewModel(context)
     val beers: List<Beer> by beerListViewModel.beers.observeAsState(initial = emptyList())
+
     beerListViewModel.loadBeers()
 
     LazyColumn {

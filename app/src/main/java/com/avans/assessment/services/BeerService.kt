@@ -1,7 +1,6 @@
 package com.avans.assessment.services
 
 import android.content.Context
-import com.avans.assessment.ApiClient
 import com.avans.assessment.models.Beer
 import com.avans.assessment.utils.GsonRequest
 import java.lang.ref.WeakReference
