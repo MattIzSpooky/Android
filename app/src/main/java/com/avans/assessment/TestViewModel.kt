@@ -18,9 +18,10 @@ class TestViewModel(ctx: Context) : ViewModel() {
         val stringRequest = StringRequest(
             Request.Method.GET, "https://www.google.com/",
             { response ->
-                this._data.value = response
+                this._data.value = response.take(500)
             },
             { print("kaput") })
+
         this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
     }
 }

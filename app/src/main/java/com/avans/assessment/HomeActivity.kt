@@ -48,6 +48,7 @@ class HomeActivity : AppCompatActivity() {
                                         }
                                     ) {
                                         Icon(Icons.Default.Menu, "Menu button")
+                                        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally))
                                     }
                                 }
                             )
