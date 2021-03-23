@@ -1,24 +1,19 @@
-package com.avans.assessment
+package com.avans.assessment.services
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
+import com.avans.assessment.ApiClient
 import java.lang.ref.WeakReference
 
-class TestViewModel(ctx: Context) : ViewModel() {
-    private val _data = MutableLiveData("")
-    val data: LiveData<String> = _data
-
+class TestService(ctx: Context) {
     private val context = WeakReference(ctx)
 
-    fun loadData() {
+    fun fetchData(callback: (result: String) -> Unit) {
         val stringRequest = StringRequest(
             Request.Method.GET, "https://www.google.com/",
             { response ->
-                this._data.value = response.take(500)
+               callback(response)
             },
             { print("kaput") })
 

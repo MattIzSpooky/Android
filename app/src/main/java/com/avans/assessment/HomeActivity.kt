@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
+import com.avans.assessment.viewmodels.TestViewModel
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -85,7 +86,9 @@ fun Test(testViewModel: TestViewModel, action: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = action) {
+            CircularProgressIndicator(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally))
             Text("Fetch me")
+            CircularProgressIndicator(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally))
         }
 
         if (name.isEmpty()) {
