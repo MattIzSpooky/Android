@@ -33,12 +33,12 @@ class HomeActivity : AppCompatActivity() {
                         topBar = { NavigationAppBar(name = "Hello World", scaffoldState = scaffoldState) },
                         drawerShape = RoundedCornerShape(10.dp, 10.dp),
                         drawerContent = {
-                            Button(onClick = { navController.navigate("beers") }) {
+                            Button(onClick = { navController.navigate("beers" ) }) {
                                 Text(text = "Beers")
                             }
                         }
                     ) {
-                        NavHost(navController, startDestination = "home") {
+                        NavHost(navController, startDestination = "beers") {
                             composable("beers") { HomeScreen(context = context) }
                         }
                     }
