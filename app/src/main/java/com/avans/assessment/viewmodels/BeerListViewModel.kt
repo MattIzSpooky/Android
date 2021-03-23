@@ -1,6 +1,7 @@
 package com.avans.assessment.viewmodels
 
 import android.content.Context
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.avans.assessment.models.Beer
@@ -11,6 +12,10 @@ class BeerListViewModel(ctx: Context) {
     private val _data: MutableLiveData<List<Beer>> = MutableLiveData(listOf())
 
     val beers: LiveData<List<Beer>> = _data
+
+    init {
+        loadBeers()
+    }
 
     fun loadBeers() {
         beerService.fetchBeers {

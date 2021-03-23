@@ -4,9 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
@@ -33,13 +36,13 @@ class HomeActivity : AppCompatActivity() {
                         topBar = { NavigationAppBar(name = "Hello World", scaffoldState = scaffoldState) },
                         drawerShape = RoundedCornerShape(10.dp, 10.dp),
                         drawerContent = {
-                            Button(onClick = { navController.navigate("beers" ) }) {
+                            Button(onClick = { navController.navigate("home" ) }) {
                                 Text(text = "Beers")
                             }
                         }
                     ) {
-                        NavHost(navController, startDestination = "beers") {
-                            composable("beers") { HomeScreen(context = context) }
+                        NavHost(navController, startDestination = "home") {
+                            composable("home") { HomeScreen(context = context) }
                         }
                     }
                 }
