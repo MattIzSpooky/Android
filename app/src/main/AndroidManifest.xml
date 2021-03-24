@@ -15,6 +15,8 @@
         android:theme="@style/Theme.AndroidApp"
         android:allowBackup="true"
         android:fullBackupContent="true">
+        <service android:name=".foreground.RandomBeerService" />
+
         <activity
             android:name=".HomeActivity"
             android:exported="true"
