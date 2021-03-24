@@ -4,18 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
-import com.avans.assessment.ui.components.NavigationAppBar
 import com.avans.assessment.ui.screens.FavoriteScreen
 import com.avans.assessment.ui.screens.HomeScreen
 
@@ -29,26 +22,11 @@ class HomeActivity : AppCompatActivity() {
         setContent {
             AvansandroidassessmentTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    val scaffoldState = rememberScaffoldState()
-
                     val navController = rememberNavController()
-                    Scaffold(
-                        scaffoldState = scaffoldState,
-                        topBar = { NavigationAppBar(name = "Hello World", scaffoldState = scaffoldState) },
-                        drawerShape = RoundedCornerShape(10.dp, 10.dp),
-                        drawerContent = {
-                            Button(onClick = { navController.navigate("home" ) }) {
-                                Text(text = "Beers")
-                            }
-                            Button(onClick = { navController.navigate("favorites" ) }) {
-                                Text(text = "Favorites")
-                            }
-                        }
-                    ) {
-                        NavHost(navController, startDestination = "home") {
-                            composable("home") { HomeScreen(context = context) }
-                            composable("favorites") { FavoriteScreen(context = context) }
-                        }
+
+                    NavHost(navController, startDestination = "home") {
+                        composable("home") { HomeScreen(context, navController) }
+                        composable("favorites") { FavoriteScreen(context, navController) }
                     }
                 }
             }
