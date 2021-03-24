@@ -7,9 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.avans.assessment.models.Beer
 import com.avans.assessment.services.BeerService
 import androidx.compose.runtime.setValue
+import com.avans.assessment.db.entities.FavoriteBeer
+import com.avans.assessment.services.FavoriteBeerService
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class BeerListViewModel(ctx: Context) : ViewModel() {
     private val beerService = BeerService(ctx)
+    private val favoriteBeerService = FavoriteBeerService(ctx)
 
     var beers: List<Beer> by mutableStateOf(listOf())
         private set
@@ -33,5 +38,11 @@ class BeerListViewModel(ctx: Context) : ViewModel() {
         }
 
         page += 1
+    }
+
+    fun favoriteBeer(beer: Beer) {
+        GlobalScope.launch {
+            favoriteBeerService.insert(beer)
+        }
     }
 }
