@@ -8,9 +8,9 @@ import java.lang.ref.WeakReference
 class BeerService(ctx: Context) {
     private val context = WeakReference(ctx)
 
-    fun fetchBeers(callback: (result: List<Beer>) -> Unit) {
+    fun fetchBeers(page: Int, perPage: Int, callback: (result: List<Beer>) -> Unit) {
         val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers", Array<Beer>::class.java,null,
+            "https://api.punkapi.com/v2/beers?page=$page&per_page=$perPage", Array<Beer>::class.java,null,
             { response ->
                 callback(response.toList())
             },
