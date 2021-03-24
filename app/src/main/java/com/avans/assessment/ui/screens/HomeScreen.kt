@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import com.avans.assessment.ui.components.BeerListItem
+import com.avans.assessment.ui.components.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.BeerListViewModel
 
 @Composable
@@ -27,13 +28,7 @@ fun BeerList(beerListViewModel: BeerListViewModel) {
     }
 
     if (beers.isEmpty()) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = CenterHorizontally
-        ) {
-            CircularProgressIndicator(modifier = Modifier.wrapContentWidth(CenterHorizontally))
-        }
+        CenteredProgressIndicator()
         return;
     }
 
@@ -61,13 +56,7 @@ fun BeerList(beerListViewModel: BeerListViewModel) {
             }
             if (isFetching) {
                 item {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = CenterHorizontally
-                    ) {
-                        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(CenterHorizontally))
-                    }
+                    CenteredProgressIndicator()
                 }
             }
         }
