@@ -41,6 +41,7 @@ fun BeerList(beerListViewModel: BeerListViewModel) {
                     BeerListItem(beer, onClick = {
                         // TODO: Navigate to detail page.
                         print(it.name)
+                        beerListViewModel.favoriteBeer(beer)
                     })
 
                     SideEffect {

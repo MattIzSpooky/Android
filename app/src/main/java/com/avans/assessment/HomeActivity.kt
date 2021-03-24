@@ -16,6 +16,7 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
 import com.avans.assessment.ui.components.NavigationAppBar
+import com.avans.assessment.ui.screens.FavoriteScreen
 import com.avans.assessment.ui.screens.HomeScreen
 
 class HomeActivity : AppCompatActivity() {
@@ -39,10 +40,14 @@ class HomeActivity : AppCompatActivity() {
                             Button(onClick = { navController.navigate("home" ) }) {
                                 Text(text = "Beers")
                             }
+                            Button(onClick = { navController.navigate("favorites" ) }) {
+                                Text(text = "Favorites")
+                            }
                         }
                     ) {
                         NavHost(navController, startDestination = "home") {
                             composable("home") { HomeScreen(context = context) }
+                            composable("favorites") { FavoriteScreen(context = context) }
                         }
                     }
                 }
