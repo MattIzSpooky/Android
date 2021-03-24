@@ -10,13 +10,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.avans.assessment.viewmodels.FavoriteBeersViewModel
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.navigation.NavHostController
+import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.FavoriteBeerListItem
 
 @Composable
-fun FavoriteScreen(context: Context){
+fun FavoriteScreen(context: Context, navController: NavHostController){
     val favoriteBeersViewModel = FavoriteBeersViewModel(context)
 
-    FavoriteBeerList(favoriteBeersViewModel)
+    Scaffold(
+        bottomBar =  { BottomNavBar(navController) } ,
+        topBar = { TopAppBar(title = { Text("Favorites")}) }
+    ){
+        FavoriteBeerList(favoriteBeersViewModel)
+    }
 }
 
 @Composable

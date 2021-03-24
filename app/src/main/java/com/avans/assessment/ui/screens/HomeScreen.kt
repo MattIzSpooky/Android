@@ -5,19 +5,28 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.avans.assessment.ui.components.BeerListItem
+import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.BeerListViewModel
 
 @Composable
-fun HomeScreen(context: Context){
+fun HomeScreen(context: Context, navController: NavHostController){
     val beerListViewModel = BeerListViewModel(context)
 
-    BeerList(beerListViewModel)
+    Scaffold(
+        bottomBar =  { BottomNavBar(navController) },
+        topBar = { TopAppBar(title = { Text("Beers")}) }
+    ){
+        BeerList(beerListViewModel)
+    }
 }
 
 @Composable
