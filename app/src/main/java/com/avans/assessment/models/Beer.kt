@@ -3,7 +3,7 @@ package com.avans.assessment.models
 import com.google.gson.annotations.SerializedName
 
 data class Beer(
-    @SerializedName("id") val id: Long,
+    @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("tagline") val tagline: String,
     @SerializedName("first_brewed") val firstBrewed: String,

@@ -4,14 +4,15 @@ import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.BeerListItem
 import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.CenteredProgressIndicator
@@ -23,14 +24,16 @@ fun HomeScreen(context: Context, navController: NavHostController){
 
     Scaffold(
         bottomBar =  { BottomNavBar(navController) },
-        topBar = { TopAppBar(title = { Text("Beers")}) }
+        topBar = {
+            TopAppBar(title = { Text("Beers")},)
+        }
     ){
-        BeerList(beerListViewModel)
+        BeerList(beerListViewModel, navController)
     }
 }
 
 @Composable
-fun BeerList(beerListViewModel: BeerListViewModel) {
+fun BeerList(beerListViewModel: BeerListViewModel, navController: NavHostController) {
     val beers = beerListViewModel.beers
     val (isFetching, setIsFetching) = remember {
         mutableStateOf(false)
@@ -48,9 +51,9 @@ fun BeerList(beerListViewModel: BeerListViewModel) {
             itemsIndexed(beers) { index, beer ->
                 key(beer.id) {
                     BeerListItem(beer, onClick = {
-                        // TODO: Navigate to detail page.
-                        print(it.name)
-                        beerListViewModel.favoriteBeer(beer)
+                        navController.navigate("detail/${beer.id}")
+                        // TODO: Call favorite button
+                        //beerListViewModel.favoriteBeer(beer)
                     })
 
                     SideEffect {

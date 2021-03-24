@@ -22,7 +22,20 @@ class BeerService(ctx: Context) {
                 callback(response.toList())
             },
             {
-                print("kaput")
+                print("Something went wrong")
+            })
+
+        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+    }
+
+    fun fetchBeer(id: String, callback: (result: Beer) -> Unit) {
+        val stringRequest = GsonRequest(
+            "https://api.punkapi.com/v2/beers/$id", Array<Beer>::class.java,null,
+            { response ->
+                callback(response[0])
+            },
+            {
+                print("Something went wrong")
             })
 
         this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
