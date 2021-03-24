@@ -35,4 +35,8 @@ class FavoriteBeersViewModel(ctx: Context) : ViewModel() {
             favoriteBeerService.delete(beer)
         }
     }
+
+    fun share(beer: FavoriteBeer) {
+        favoriteBeerService.share(beer)
+    }
 }

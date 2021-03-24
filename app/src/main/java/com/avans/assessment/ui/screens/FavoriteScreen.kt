@@ -33,7 +33,11 @@ fun FavoriteBeerList(favoriteBeersViewModel: FavoriteBeersViewModel) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(favorites) { favorite ->
-                FavoriteBeerListItem(favorite, onClick = favoriteBeersViewModel::unfavorite)
+                FavoriteBeerListItem(
+                    favorite,
+                    onClick = favoriteBeersViewModel::unfavorite,
+                    longPress = favoriteBeersViewModel::share
+                )
             }
         }
     }
