@@ -66,7 +66,7 @@ class BeerService(ctx: Context) {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(ctx)) {
-            notify(beer.id.toInt(), builder.build())
+            notify(beer.id, builder.build())
         }
     }
 

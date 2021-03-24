@@ -41,8 +41,6 @@ class BeerListViewModel(ctx: Context) : ViewModel() {
     }
 
     fun favoriteBeer(beer: Beer) {
-        beerService.sendNotification(beer)
-
         GlobalScope.launch {
             favoriteBeerService.insert(beer)
         }

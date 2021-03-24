@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     
@@ -15,7 +17,7 @@
         android:theme="@style/Theme.AndroidApp"
         android:allowBackup="true"
         android:fullBackupContent="true">
-        <service android:name=".foreground.RandomBeerService" />
+        <service android:name=".foreground.RandomBeerNotificationService" />
 
         <activity
             android:name=".HomeActivity"
