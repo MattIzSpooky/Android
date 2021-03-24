@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class FavoriteBeer(
-    @PrimaryKey val id: Long,
+    @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "tag_line") val tagline: String,
     @ColumnInfo(name = "first_brewed") val firstBrewed: String,
