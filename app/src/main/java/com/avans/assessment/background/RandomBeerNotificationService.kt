@@ -1,13 +1,9 @@
-package com.avans.assessment.foreground
+package com.avans.assessment.background
 
 import android.app.Service
 import android.content.Intent
 import android.os.*
-import android.os.Looper.loop
-import androidx.core.app.NotificationCompat
-import com.avans.assessment.R
 import com.avans.assessment.services.BeerService
-import kotlinx.coroutines.delay
 import java.util.Timer
 import java.util.TimerTask
 

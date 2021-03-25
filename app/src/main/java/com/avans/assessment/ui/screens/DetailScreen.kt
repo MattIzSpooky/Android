@@ -14,29 +14,29 @@ import com.avans.assessment.viewmodels.BeerViewModel
 
 @Composable
 fun DetailScreen(context: Context, navController: NavHostController, id: String?) {
-    if(id == null){
+    if (id == null) {
         CenteredProgressIndicator()
-    }
-    else{
+    } else {
         val beerViewModel = BeerViewModel(context, id)
 
         Scaffold(
-            bottomBar =  { BottomNavBar(navController) },
+            bottomBar = { BottomNavBar(navController) },
             topBar = {
-                TopAppBar(title = { Text("Beer: ${beerViewModel.beer?.name}")},
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
-                        Icon(Icons.Filled.ArrowBack, "back")
-                    }
-                },)
+                TopAppBar(
+                    title = { Text("Beer: ${beerViewModel.beer?.name}") },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navController.popBackStack()
+                        }) {
+                            Icon(Icons.Filled.ArrowBack, "back")
+                        }
+                    },
+                )
             }
-        ){
-            if(beerViewModel.beer == null){
+        ) {
+            if (beerViewModel.beer == null) {
                 CenteredProgressIndicator()
-            }
-            else {
+            } else {
                 BeerDetail(beerViewModel.beer!!)
             }
         }
@@ -44,8 +44,38 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
 }
 
 @Composable
-fun BeerDetail(beer: Beer){
-    Column{
+fun DetailScreenWithoutBottom(context: Context, navController: NavHostController, id: String?) {
+    if (id == null) {
+        CenteredProgressIndicator()
+        return
+    }
+    val beerViewModel = BeerViewModel(context, id)
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Beer: ${beerViewModel.beer?.name}") },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(Icons.Filled.ArrowBack, "back")
+                    }
+                },
+            )
+        }
+    ) {
+        if (beerViewModel.beer == null) {
+            CenteredProgressIndicator()
+        } else {
+            BeerDetail(beerViewModel.beer!!)
+        }
+    }
+}
+
+@Composable
+fun BeerDetail(beer: Beer) {
+    Column {
         Text("${beer.id}")
         Text(beer.name)
         Text(beer.description)

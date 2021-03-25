@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AndroidApp"
         android:allowBackup="true"
         android:fullBackupContent="true">
-        <service android:name=".foreground.RandomBeerNotificationService" />
+        <service android:name=".background.RandomBeerNotificationService" />
 
         <activity
             android:name=".HomeActivity"
@@ -32,7 +32,8 @@
         </activity>
 
         <activity android:name=".SearchActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AndroidApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.avans.assessment.models.Beer
 
 @Composable
-fun BeerListItem(item: Beer, onClick: (item: Beer) -> Unit) {
+fun BeerListItem(item: Beer, onClick: (Beer) -> Unit) {
     Card( shape = RoundedCornerShape(4.dp),
         backgroundColor = Color.DarkGray,
         modifier = Modifier.fillMaxWidth().padding(8.dp).height(50.dp).clickable { onClick(item) }) {
