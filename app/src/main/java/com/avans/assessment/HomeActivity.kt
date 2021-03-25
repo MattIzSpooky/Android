@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.*
+import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,6 +17,11 @@ import com.avans.assessment.ui.screens.DetailScreen
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
 import com.avans.assessment.ui.screens.FavoriteScreen
 import com.avans.assessment.ui.screens.HomeScreen
+import com.avans.assessment.ui.screens.RandomScreen
+import android.R
+
+
+
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var context: Context
@@ -28,6 +34,8 @@ class HomeActivity : AppCompatActivity() {
             startService(intent)
         }
 
+        val randomScreenIntent = Intent(this, RandomActivity::class.java)
+
         setContent {
             AvansandroidassessmentTheme {
                 Surface(color = MaterialTheme.colors.background) {
@@ -36,6 +44,7 @@ class HomeActivity : AppCompatActivity() {
                     NavHost(navController, startDestination = "home") {
                         composable("home") { HomeScreen(context, navController) }
                         composable("favorites") { FavoriteScreen(context, navController) }
+                        composable("random") { startActivity(randomScreenIntent) }
                         composable("detail/{id}") { entry -> DetailScreen(context, navController, entry.arguments?.getString("id")) }
                     }
                 }
