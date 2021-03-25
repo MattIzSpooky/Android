@@ -79,7 +79,7 @@ fun SearchList(searchViewModel: SearchViewModel, itemClick: (Beer) -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(searchViewModel.searchResults) {
-                BeerListItem(item = it, itemClick)
+                BeerListItem(item = it, onClick = itemClick)
             }
         }
     }
