@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,11 +14,6 @@ import com.avans.assessment.ui.screens.DetailScreen
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
 import com.avans.assessment.ui.screens.FavoriteScreen
 import com.avans.assessment.ui.screens.HomeScreen
-import com.avans.assessment.ui.screens.RandomScreen
-import android.R
-
-
-
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var context: Context
