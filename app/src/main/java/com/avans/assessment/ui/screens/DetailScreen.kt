@@ -1,16 +1,26 @@
 package com.avans.assessment.ui.screens
 
 import android.content.Context
-import androidx.compose.foundation.layout.Column
+import android.widget.ScrollView
+import android.widget.Scroller
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import androidx.core.view.ScrollingView
 import androidx.navigation.NavHostController
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.Centered
 import com.avans.assessment.ui.components.CenteredProgressIndicator
+import com.avans.assessment.ui.theme.Typography
 import com.avans.assessment.viewmodels.BeerViewModel
 
 @Composable
@@ -24,7 +34,7 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
             bottomBar = { BottomNavBar(context,navController) },
             topBar = {
                 TopAppBar(
-                    title = { Text("Beer: ${beerViewModel.beer?.name}") },
+                    title = { Text("Beer") },
                     navigationIcon = {
                         IconButton(onClick = {
                             navController.popBackStack()
@@ -55,7 +65,7 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Beer: ${beerViewModel.beer?.name}") },
+                title = { Text("Beer") },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
@@ -76,12 +86,35 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
 
 @Composable
 fun BeerDetail(beer: Beer) {
-    // TODO: Style detail page
-    Column {
-        Text("${beer.id}")
-        Text(beer.name)
-        Text(beer.description)
-        Text(beer.firstBrewed)
-        Text(beer.tagline)
+    Column(
+        modifier = Modifier.padding(3.dp).fillMaxWidth()) {
+        Card(
+            elevation = 2.dp,
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(),
+            backgroundColor = Color.LightGray
+        ) {
+            Column(modifier = Modifier.padding(15.dp)) {
+                Text(beer.name, style = Typography.h6)
+                Text(beer.tagline, style = Typography.subtitle1)
+                Text(beer.firstBrewed, style = Typography.caption)
+            }
+        }
+
+        Spacer(Modifier.size(5.dp))
+
+        Card(
+            elevation = 2.dp,
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(),
+            backgroundColor = Color.LightGray
+        ) {
+            Column(modifier = Modifier.padding(15.dp)) {
+                Text("Description:", style = Typography.h6)
+                Text(beer.description, style = Typography.body1)
+            }
+        }
     }
 }
