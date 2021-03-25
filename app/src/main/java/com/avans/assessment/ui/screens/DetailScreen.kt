@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -28,7 +29,7 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
             bottomBar = { BottomNavBar(context,navController) },
             topBar = {
                 TopAppBar(
-                    title = { Text("Beer: ${beerViewModel.beer?.name}") },
+                    title = { Text("${beerViewModel.beer?.name}") },
                     navigationIcon = {
                         IconButton(onClick = {
                             navController.popBackStack()
@@ -82,16 +83,31 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
 fun BeerDetail(beer: Beer) {
     Column(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(3.dp)
             .fillMaxWidth()
     ) {
-        Spacer(Modifier.size(20.dp))
-        Card(elevation = 4.dp) {
-            Column{
-                Text("${beer.id}")
-                Text(beer.description, style = Typography.h3)
-                Text(beer.firstBrewed)
-                Text(beer.tagline)
+        Card(
+            elevation = 2.dp,
+            modifier = Modifier.padding(10.dp),
+            backgroundColor = Color.LightGray
+        ) {
+            Column(modifier = Modifier.padding(15.dp)) {
+                Text(beer.name, style = Typography.h6)
+                Text(beer.tagline, style = Typography.subtitle1)
+                Text(beer.firstBrewed, style = Typography.caption)
+            }
+        }
+
+        Spacer(Modifier.size(5.dp))
+
+        Card(
+            elevation = 2.dp,
+            modifier = Modifier.padding(10.dp),
+            backgroundColor = Color.LightGray
+        ) {
+            Column(modifier = Modifier.padding(15.dp)) {
+                Text("Description:", style = Typography.h6)
+                Text(beer.description, style = Typography.body1)
             }
         }
     }
