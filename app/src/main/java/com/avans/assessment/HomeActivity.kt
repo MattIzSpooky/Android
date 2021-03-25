@@ -32,8 +32,6 @@ class HomeActivity : AppCompatActivity() {
             startService(intent)
         }
 
-        val randomScreenIntent = Intent(this, RandomActivity::class.java)
-
         setContent {
             AvansandroidassessmentTheme {
                 Surface(color = MaterialTheme.colors.background) {
@@ -42,7 +40,6 @@ class HomeActivity : AppCompatActivity() {
                     NavHost(navController, startDestination = "home") {
                         composable("home") { HomeScreen(context, navController) }
                         composable("favorites") { FavoriteScreen(context, navController) }
-                        composable("random") { startActivity(randomScreenIntent) }
                         composable("detail/{id}") { entry -> DetailScreen(context, navController, entry.arguments?.getString("id")) }
                     }
                 }

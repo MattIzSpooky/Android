@@ -24,4 +24,10 @@ class BeerViewModel(ctx: Context, id: String) : ViewModel() {
             beer = it
         }
     }
+
+    fun loadRandomBeer(){
+        beerService.fetchRandom {
+            beer = it
+        }
+    }
 }

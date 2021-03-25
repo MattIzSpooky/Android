@@ -20,7 +20,7 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
         val beerViewModel = BeerViewModel(context, id)
 
         Scaffold(
-            bottomBar = { BottomNavBar(navController) },
+            bottomBar = { BottomNavBar(context,navController) },
             topBar = {
                 TopAppBar(
                     title = { Text("Beer: ${beerViewModel.beer?.name}") },
@@ -75,9 +75,12 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
 
 @Composable
 fun BeerDetail(beer: Beer) {
+    // TODO: Style detail page
     Column {
         Text("${beer.id}")
         Text(beer.name)
         Text(beer.description)
+        Text(beer.firstBrewed)
+        Text(beer.tagline)
     }
 }
