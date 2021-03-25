@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BottomNavBar
+import com.avans.assessment.ui.components.Centered
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.BeerViewModel
 
@@ -37,7 +38,7 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
             if (beerViewModel.beer == null) {
                 CenteredProgressIndicator()
             } else {
-                BeerDetail(beerViewModel.beer!!)
+                BeerDetail(beerViewModel)
             }
         }
     }
@@ -68,13 +69,22 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
         if (beerViewModel.beer == null) {
             CenteredProgressIndicator()
         } else {
-            BeerDetail(beerViewModel.beer!!)
+            BeerDetail(beerViewModel)
         }
     }
 }
 
 @Composable
-fun BeerDetail(beer: Beer) {
+fun BeerDetail(beerViewModel: BeerViewModel) {
+    val beer = beerViewModel.beer
+    
+    if (beer == null) {
+        Centered {
+            Text("Something went wrong. Could not fetch beer.")
+        }
+        return
+    }
+    
     Column {
         Text("${beer.id}")
         Text(beer.name)

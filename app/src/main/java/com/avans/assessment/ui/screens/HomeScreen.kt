@@ -46,11 +46,11 @@ fun BeerList(beerListViewModel: BeerListViewModel, navController: NavHostControl
         LazyColumn {
             itemsIndexed(beers) { index, beer ->
                 key(beer.id) {
-                    BeerListItem(beer) {
+                    BeerListItem(beer, onClick = {
                         navController.navigate("detail/${beer.id}")
-                        // TODO: Call favorite button
-                        //beerListViewModel.favoriteBeer(beer)
-                    }
+                    }, onLongPress = {
+                        beerListViewModel.favoriteBeer(beer)
+                    })
 
                     SideEffect {
                         if (lastIndex == index) {

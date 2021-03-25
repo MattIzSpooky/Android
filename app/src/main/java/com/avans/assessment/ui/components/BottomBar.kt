@@ -6,6 +6,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 fun BottomBar(
     homeListener: () -> Unit,
     favoriteListener: () -> Unit,
+    contactListener: () -> Unit,
 ) {
     BottomAppBar {
         IconButton(
@@ -26,6 +28,12 @@ fun BottomBar(
             onClick = favoriteListener
         ) {
             Icon(Icons.Filled.Favorite, "favorite")
+        }
+        IconButton(
+            modifier = Modifier.weight(1f),
+            onClick = contactListener
+        ) {
+            Icon(Icons.Filled.Phone, "Contacts")
         }
     }
 }

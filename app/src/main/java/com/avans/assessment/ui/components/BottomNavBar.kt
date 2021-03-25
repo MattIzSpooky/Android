@@ -8,6 +8,7 @@ import androidx.navigation.compose.navigate
 fun BottomNavBar(navController: NavHostController){
     BottomBar(
         homeListener = { navController.navigate("home" ) },
-        favoriteListener = { navController.navigate("favorites" ) }
+        favoriteListener = { navController.navigate("favorites" ) },
+        contactListener = { navController.navigate("contacts" ) }
     )
 }
