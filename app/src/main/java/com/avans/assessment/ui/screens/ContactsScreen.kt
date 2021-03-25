@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.activity.compose.registerForActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,26 +21,14 @@ import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.viewmodels.ContactsViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.Centered
 
 @Composable
 fun ContactsScreen(context: Context, navController: NavHostController) {
     val contactsViewModel = ContactsViewModel(context)
 
-    val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast
-                    .makeText(context,"Contact page will work.", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast
-                    .makeText(context,"Contacts will not work until it has been accepted.",
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
-            }
-        }
+    val requestPermissionLauncher = createRequestPermissionLauncher(context, navController)
 
     Scaffold(
         bottomBar = { BottomNavBar(navController) },
@@ -47,8 +36,6 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
             TopAppBar(title = { Text("Contacts") })
         }
     ) {
-
-
         when {
             ContextCompat.checkSelfPermission(
                 context,
@@ -65,16 +52,41 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
                     Centered {
                         Text("No contacts")
                     }
-                } else {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        LazyColumn() {
-                            items(contactsViewModel.contacts) {
-                                Text(it)
-                            }
+                    return@Scaffold
+                }
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    LazyColumn() {
+                        items(contactsViewModel.contacts) {
+                            Text(it)
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun createRequestPermissionLauncher(
+    context: Context,
+    navController: NavHostController
+): ActivityResultLauncher<String> {
+    return registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        if (isGranted) {
+            Toast
+                .makeText(context, "Contact page will work.", Toast.LENGTH_SHORT)
+                .show()
+
+            // Reroute to current page to force checking the permission again and showing the data if changed.
+            navController.popBackStack()
+            navController.navigate("contacts")
+        } else {
+            Toast
+                .makeText(
+                    context, "Contacts will not work until it has been accepted.",
+                    Toast.LENGTH_SHORT
+                ).show()
         }
     }
 }

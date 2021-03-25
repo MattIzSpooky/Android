@@ -5,10 +5,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 
 @Composable
-fun BottomNavBar(navController: NavHostController){
+fun BottomNavBar(navController: NavHostController) {
     BottomBar(
-        homeListener = { navController.navigate("home" ) },
-        favoriteListener = { navController.navigate("favorites" ) },
-        contactListener = { navController.navigate("contacts" ) }
+        homeListener = { route(navController, "home")  },
+        favoriteListener = { route(navController, "favorites") },
+        contactListener = { route(navController, "contacts") }
     )
+}
+
+private fun route(navController: NavHostController, route: String) {
+    navController.navigate(route) { launchSingleTop = true }
 }

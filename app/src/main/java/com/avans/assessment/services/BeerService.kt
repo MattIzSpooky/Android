@@ -76,6 +76,8 @@ class BeerService(ctx: Context) {
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(beer.name)
             .setContentText(beer.description)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(beer.description))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(ctx)) {
