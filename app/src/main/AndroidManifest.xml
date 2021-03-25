@@ -20,6 +20,11 @@
         <service android:name=".background.RandomBeerNotificationService" />
 
         <activity
+            android:name=".RandomActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AndroidApp.NoActionBar"/>
+
+        <activity
             android:name=".HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"

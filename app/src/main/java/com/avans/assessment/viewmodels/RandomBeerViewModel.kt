@@ -8,18 +8,17 @@ import androidx.lifecycle.ViewModel
 import com.avans.assessment.models.Beer
 import com.avans.assessment.services.BeerService
 
-class BeerViewModel(ctx: Context, id: String) : ViewModel() {
+class RandomBeerViewModel(ctx: Context) : ViewModel() {
     private val beerService = BeerService(ctx)
-    private val beerId = id
 
     init {
-        loadBeer()
+        loadRandomBeer()
     }
 
     var beer: Beer? by mutableStateOf(null)
 
-    private fun loadBeer() {
-        beerService.fetchBeer(beerId) {
+    private fun loadRandomBeer(){
+        beerService.fetchRandom {
             beer = it
         }
     }

@@ -21,7 +21,7 @@ fun FavoriteScreen(context: Context, navController: NavHostController){
     val favoriteBeersViewModel = FavoriteBeersViewModel(context)
 
     Scaffold(
-        bottomBar =  { BottomNavBar(navController) } ,
+        bottomBar =  { BottomNavBar(context,navController) } ,
         topBar = { TopAppBar(title = { Text("Favorites")}) }
     ){
         FavoriteBeerList(favoriteBeersViewModel)

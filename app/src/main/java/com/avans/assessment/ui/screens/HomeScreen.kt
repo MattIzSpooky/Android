@@ -19,7 +19,7 @@ fun HomeScreen(context: Context, navController: NavHostController){
     val beerListViewModel = BeerListViewModel(context)
 
     Scaffold(
-        bottomBar =  { BottomNavBar(navController) },
+        bottomBar =  { BottomNavBar(context,navController) },
         topBar = {
             TopAppBar(title = { Text("Beers")},)
         }
