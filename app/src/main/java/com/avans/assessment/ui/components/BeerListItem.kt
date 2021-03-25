@@ -22,12 +22,13 @@ import com.avans.assessment.ui.theme.Typography
 
 @Composable
 fun BeerListItem(item: Beer, onClick: (Beer) -> Unit, onLongPress: ((Beer) -> Unit)? = null) {
-    Card(shape = RoundedCornerShape(4.dp),
-        backgroundColor = Color.DarkGray,
+    Surface(shape = RoundedCornerShape(4.dp),
+        elevation = 8.dp,
+        color = Color.LightGray,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .height(50.dp)
+            .height(55.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {

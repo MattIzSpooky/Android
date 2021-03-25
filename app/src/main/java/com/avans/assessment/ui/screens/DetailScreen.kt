@@ -1,7 +1,10 @@
 package com.avans.assessment.ui.screens
 
 import android.content.Context
+import android.widget.ScrollView
+import android.widget.Scroller
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -11,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.core.view.ScrollingView
 import androidx.navigation.NavHostController
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BottomNavBar
@@ -30,7 +34,7 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
             bottomBar = { BottomNavBar(context,navController) },
             topBar = {
                 TopAppBar(
-                    title = { Text("${beerViewModel.beer?.name}") },
+                    title = { Text("Beer") },
                     navigationIcon = {
                         IconButton(onClick = {
                             navController.popBackStack()
@@ -61,7 +65,7 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("${beerViewModel.beer?.name}") },
+                title = { Text("Beer") },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
@@ -83,13 +87,12 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
 @Composable
 fun BeerDetail(beer: Beer) {
     Column(
-        modifier = Modifier
-            .padding(3.dp)
-            .fillMaxWidth()
-    ) {
+        modifier = Modifier.padding(3.dp).fillMaxWidth()) {
         Card(
             elevation = 2.dp,
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(),
             backgroundColor = Color.LightGray
         ) {
             Column(modifier = Modifier.padding(15.dp)) {
@@ -103,7 +106,9 @@ fun BeerDetail(beer: Beer) {
 
         Card(
             elevation = 2.dp,
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(),
             backgroundColor = Color.LightGray
         ) {
             Column(modifier = Modifier.padding(15.dp)) {
