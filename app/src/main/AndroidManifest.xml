@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AndroidApp"
         android:allowBackup="true"
         android:fullBackupContent="true">
-        <service android:name=".foreground.RandomBeerNotificationService" />
+        <service android:name=".background.RandomBeerNotificationService" />
 
         <activity
             android:name=".HomeActivity"
@@ -28,6 +28,16 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".SearchActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AndroidApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
     </application>

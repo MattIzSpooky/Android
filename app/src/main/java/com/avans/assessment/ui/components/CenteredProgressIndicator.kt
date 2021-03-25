@@ -1,8 +1,5 @@
 package com.avans.assessment.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -11,11 +8,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun CenteredProgressIndicator() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Centered {
         CircularProgressIndicator(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally))
     }
 }

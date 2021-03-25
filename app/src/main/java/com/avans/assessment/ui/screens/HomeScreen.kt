@@ -5,11 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
@@ -50,11 +46,11 @@ fun BeerList(beerListViewModel: BeerListViewModel, navController: NavHostControl
         LazyColumn {
             itemsIndexed(beers) { index, beer ->
                 key(beer.id) {
-                    BeerListItem(beer, onClick = {
+                    BeerListItem(beer) {
                         navController.navigate("detail/${beer.id}")
                         // TODO: Call favorite button
                         //beerListViewModel.favoriteBeer(beer)
-                    })
+                    }
 
                     SideEffect {
                         if (lastIndex == index) {

@@ -54,6 +54,19 @@ class BeerService(ctx: Context) {
         this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
     }
 
+    fun search(beerName: String, callback: (result: List<Beer>) -> Unit) {
+        val stringRequest = GsonRequest(
+            "https://api.punkapi.com/v2/beers?beer_name=${beerName.replace(' ', '_')}", Array<Beer>::class.java,null,
+            { response ->
+                callback(response.toList())
+            },
+            {
+                print("kaput")
+            })
+
+        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+    }
+
     fun sendNotification(beer: Beer) {
         val ctx = context.get() ?: return  // TODO: Show error message.
 
