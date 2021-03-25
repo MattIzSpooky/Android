@@ -12,9 +12,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.BeerViewModel
+import com.avans.assessment.viewmodels.RandomBeerViewModel
 
 class RandomScreen() : Fragment() {
-    private lateinit var beerViewModel: BeerViewModel
+    private lateinit var randomBeerViewModel: RandomBeerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,10 +38,10 @@ class RandomScreen() : Fragment() {
                         )
                     }
                 ){
-                    if (beerViewModel.beer == null) {
+                    if (randomBeerViewModel.beer == null) {
                         CenteredProgressIndicator()
                     } else {
-                        BeerDetail(beerViewModel.beer!!)
+                        BeerDetail(randomBeerViewModel.beer!!)
                     }
                 }
             }
@@ -50,12 +51,6 @@ class RandomScreen() : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        beerViewModel = BeerViewModel(context, "")
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        beerViewModel.loadRandomBeer()
+        randomBeerViewModel = RandomBeerViewModel(context)
     }
 }
