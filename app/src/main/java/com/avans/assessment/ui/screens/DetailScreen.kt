@@ -1,15 +1,20 @@
 package com.avans.assessment.ui.screens
 
 import android.content.Context
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.CenteredProgressIndicator
+import com.avans.assessment.ui.theme.Typography
 import com.avans.assessment.viewmodels.BeerViewModel
 
 @Composable
@@ -54,7 +59,7 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Beer: ${beerViewModel.beer?.name}") },
+                title = { Text("${beerViewModel.beer?.name}") },
                 navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
@@ -75,12 +80,19 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
 
 @Composable
 fun BeerDetail(beer: Beer) {
-    // TODO: Style detail page
-    Column {
-        Text("${beer.id}")
-        Text(beer.name)
-        Text(beer.description)
-        Text(beer.firstBrewed)
-        Text(beer.tagline)
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+    ) {
+        Spacer(Modifier.size(20.dp))
+        Card(elevation = 4.dp) {
+            Column{
+                Text("${beer.id}")
+                Text(beer.description, style = Typography.h3)
+                Text(beer.firstBrewed)
+                Text(beer.tagline)
+            }
+        }
     }
 }
