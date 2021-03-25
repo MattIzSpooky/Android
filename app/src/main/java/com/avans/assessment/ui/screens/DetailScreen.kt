@@ -38,7 +38,7 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
             if (beerViewModel.beer == null) {
                 CenteredProgressIndicator()
             } else {
-                BeerDetail(beerViewModel)
+                BeerDetail(beerViewModel.beer!!)
             }
         }
     }
@@ -69,22 +69,13 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
         if (beerViewModel.beer == null) {
             CenteredProgressIndicator()
         } else {
-            BeerDetail(beerViewModel)
+            BeerDetail(beerViewModel.beer!!)
         }
     }
 }
 
 @Composable
-fun BeerDetail(beerViewModel: BeerViewModel) {
-    val beer = beerViewModel.beer
-    
-    if (beer == null) {
-        Centered {
-            Text("Something went wrong. Could not fetch beer.")
-        }
-        return
-    }
-    
+fun BeerDetail(beer: Beer) {
     // TODO: Style detail page
     Column {
         Text("${beer.id}")

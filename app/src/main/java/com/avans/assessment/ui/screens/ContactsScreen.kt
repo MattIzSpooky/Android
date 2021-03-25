@@ -31,7 +31,7 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
     val requestPermissionLauncher = createRequestPermissionLauncher(context, navController)
 
     Scaffold(
-        bottomBar = { BottomNavBar(navController) },
+        bottomBar = { BottomNavBar(context, navController) },
         topBar = {
             TopAppBar(title = { Text("Contacts") })
         }
