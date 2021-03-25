@@ -6,9 +6,14 @@ import com.avans.assessment.db.AppDatabase
 import com.avans.assessment.db.entities.FavoriteBeer
 import com.avans.assessment.models.Beer
 import android.content.Intent
+import android.os.Environment
 
 import androidx.core.content.ContextCompat.startActivity
 import java.lang.ref.WeakReference
+import java.io.File
+
+
+
 
 
 class FavoriteBeerService(ctx: Context) {

@@ -1,12 +1,10 @@
 package com.avans.assessment.ui.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +16,9 @@ import com.avans.assessment.db.entities.FavoriteBeer
 
 @Composable
 fun FavoriteBeerListItem(
-    item: FavoriteBeer, 
+    item: FavoriteBeer,
     onClick: (item: FavoriteBeer) -> Unit,
-    longPress: (item: FavoriteBeer) -> Unit
+    onLongPress: (item: FavoriteBeer) -> Unit
 ) {
     Card( shape = RoundedCornerShape(4.dp),
         backgroundColor = Color.DarkGray,
@@ -30,7 +28,7 @@ fun FavoriteBeerListItem(
             .height(50.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
-                    onLongPress = { longPress(item)},
+                    onLongPress = { onLongPress(item)},
                     onTap = { onClick(item) }
                 )
             }

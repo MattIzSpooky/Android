@@ -11,12 +11,17 @@ import com.avans.assessment.RandomActivity
 @Composable
 fun BottomNavBar(context: Context, navController: NavHostController){
     BottomBar(
-        homeListener = { navController.navigate("home" ) },
-        favoriteListener = { navController.navigate("favorites" ) },
+        homeListener = { route(navController, "home")  },
+        favoriteListener = { route(navController, "favorites") },
+        contactListener = { route(navController, "contacts") },
         randomListener = {
             val intent = Intent(context, RandomActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(context, intent, null)
         },
     )
+}
+
+private fun route(navController: NavHostController, route: String) {
+    navController.navigate(route) { launchSingleTop = true }
 }
