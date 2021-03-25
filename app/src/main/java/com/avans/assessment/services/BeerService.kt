@@ -48,7 +48,7 @@ class BeerService(ctx: Context) {
                 callback(response[0])
             },
             {
-                print("kaput")
+                print("Something went wrong")
             })
 
         this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
@@ -61,7 +61,7 @@ class BeerService(ctx: Context) {
                 callback(response.toList())
             },
             {
-                print("kaput")
+                print("Something went wrong")
             })
 
         this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
