@@ -8,22 +8,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.avans.assessment.viewmodels.FavoriteBeersViewModel
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.BottomNavBar
-import com.avans.assessment.ui.components.Centered
+import com.avans.assessment.ui.components.general.Centered
 import com.avans.assessment.ui.components.FavoriteBeerListItem
 
 @Composable
-fun FavoriteScreen(context: Context, navController: NavHostController){
+fun FavoriteScreen(context: Context, navController: NavHostController) {
     val favoriteBeersViewModel = FavoriteBeersViewModel(context)
 
     Scaffold(
-        bottomBar =  { BottomNavBar(context,navController) } ,
-        topBar = { TopAppBar(title = { Text("Favorites")}) }
-    ){
+        bottomBar = { BottomNavBar(context, navController) },
+        topBar = { TopAppBar(title = { Text("Favorites") }) }
+    ) {
         val error = favoriteBeersViewModel.error
 
         if (error != null) {
@@ -31,12 +31,16 @@ fun FavoriteScreen(context: Context, navController: NavHostController){
             return@Scaffold
         }
 
-        FavoriteBeerList(favoriteBeersViewModel)
+        FavoriteBeerList(context, favoriteBeersViewModel, navController)
     }
 }
 
 @Composable
-fun FavoriteBeerList(favoriteBeersViewModel: FavoriteBeersViewModel) {
+fun FavoriteBeerList(
+    context: Context,
+    favoriteBeersViewModel: FavoriteBeersViewModel,
+    navController: NavHostController
+) {
     val favorites = favoriteBeersViewModel.favoriteBeers
 
     if (favorites.isEmpty()) {
@@ -50,8 +54,12 @@ fun FavoriteBeerList(favoriteBeersViewModel: FavoriteBeersViewModel) {
         LazyColumn {
             items(favorites) { favorite ->
                 FavoriteBeerListItem(
+                    context,
                     favorite,
-                    onClick = favoriteBeersViewModel::unfavorite,
+                    onClick = {
+                        navController.navigate("detail/${it.id}")
+                    },
+                    onDoubleTap = favoriteBeersViewModel::unfavorite,
                     onLongPress = favoriteBeersViewModel::share
                 )
             }

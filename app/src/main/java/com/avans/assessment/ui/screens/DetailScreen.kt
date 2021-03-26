@@ -3,6 +3,8 @@ package com.avans.assessment.ui.screens
 import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -14,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BottomNavBar
-import com.avans.assessment.ui.components.Centered
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 import com.avans.assessment.ui.components.NetworkImage
+import com.avans.assessment.ui.components.general.Centered
 import com.avans.assessment.ui.theme.Typography
 import com.avans.assessment.viewmodels.BeerViewModel
 
@@ -96,12 +98,18 @@ fun DetailScreenWithoutBottom(context: Context, navController: NavHostController
 fun BeerDetail(context: Context, beer: Beer) {
     val configuration = LocalConfiguration.current
 
-    when (configuration.orientation) {
-        Configuration.ORIENTATION_LANDSCAPE -> {
-            BeerDetailLandScape(context, beer)
-        }
-        else -> {
-            BeerDetailPortrait(context, beer)
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight()
+        .verticalScroll(rememberScrollState())
+        .padding(bottom = 55.dp)) {
+        when (configuration.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                BeerDetailLandScape(context, beer)
+            }
+            else -> {
+                BeerDetailPortrait(context, beer)
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BeerListItem
-import com.avans.assessment.ui.components.Centered
+import com.avans.assessment.ui.components.general.Centered
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 
 @Composable

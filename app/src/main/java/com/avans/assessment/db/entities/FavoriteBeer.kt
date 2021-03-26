@@ -10,6 +10,5 @@ data class FavoriteBeer(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "tag_line") val tagline: String,
     @ColumnInfo(name = "first_brewed") val firstBrewed: String,
-    @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "image_url") val imageUrl: String?,
 )

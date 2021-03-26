@@ -1,7 +1,6 @@
 package com.avans.assessment.ui.screens
 
 import android.content.Context
-import android.graphics.Color
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -13,7 +12,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.BeerListItem
 import com.avans.assessment.ui.components.BottomNavBar
-import com.avans.assessment.ui.components.Centered
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.BeerListViewModel
 
@@ -41,9 +39,7 @@ fun HomeScreen(context: Context, navController: NavHostController){
 @Composable
 fun BeerList(context: Context, beerListViewModel: BeerListViewModel, navController: NavHostController) {
     val beers = beerListViewModel.beers
-    val (isFetching, setIsFetching) = remember {
-        mutableStateOf(false)
-    }
+    val isFetching = beerListViewModel.isFetching
 
     if (beers.isEmpty()) {
         CenteredProgressIndicator()
@@ -58,17 +54,13 @@ fun BeerList(context: Context, beerListViewModel: BeerListViewModel, navControll
                 key(beer.id) {
                     BeerListItem(context, beer, onClick = {
                         navController.navigate("detail/${beer.id}")
-                    }, onLongPress = {
+                    }, onDoubleTap = {
                         beerListViewModel.favoriteBeer(beer)
                     })
 
                     SideEffect {
                         if (lastIndex == index) {
-                            setIsFetching(true)
-
-                            beerListViewModel.loadBeers {
-                                setIsFetching(false)
-                            }
+                            beerListViewModel.loadBeers()
                         }
                     }
                 }

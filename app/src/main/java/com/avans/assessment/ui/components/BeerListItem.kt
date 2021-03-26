@@ -16,35 +16,53 @@ import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.theme.Typography
 
 @Composable
-fun BeerListItem(context: Context, item: Beer, onClick: (Beer) -> Unit, onLongPress: ((Beer) -> Unit)? = null) {
+fun BeerListItem(
+    context: Context,
+    item: Beer,
+    onClick: (Beer) -> Unit,
+    onDoubleTap: ((Beer) -> Unit)? = null
+) {
     Surface(shape = RoundedCornerShape(4.dp),
         elevation = 8.dp,
         color = Color.LightGray,
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .height(80.dp)
+            .sizeIn(minHeight = 20.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
-                    onLongPress = {
-                        if (onLongPress != null) {
-                            onLongPress(item)
+                    onDoubleTap = {
+                        if (onDoubleTap != null) {
+                            onDoubleTap(item)
                         }
                     },
                     onTap = { onClick(item) }
                 )
             }) {
 
-        Row {
+        Row() {
             item.imageUrl?.also {
-                Column {
-                    NetworkImage(context, url = item.imageUrl, Modifier.padding(10.dp))
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                ) {
+                    NetworkImage(
+                        context, url = item.imageUrl,
+                        Modifier
+                            .padding(10.dp)
+                            .size(40.dp)
+                    )
                 }
             }
 
             Column(Modifier.padding(8.dp)) {
                 Text(text = item.name, textAlign = TextAlign.Left, style = Typography.body1)
-                Text(text = item.firstBrewed, textAlign = TextAlign.Left, style = Typography.caption)
+                Text(text = item.tagline, textAlign = TextAlign.Left, style = Typography.caption)
+                Text(
+                    text = item.firstBrewed,
+                    textAlign = TextAlign.Left,
+                    style = Typography.caption
+                )
             }
         }
     }
