@@ -3,7 +3,7 @@
     <PreferenceCategory app:title="@string/pref_header">
         <EditTextPreference
             app:key="minimum_alcohol"
-            app:persistent="false"
+            app:defaultValue="0"
             app:title="@string/min_alcohol"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>

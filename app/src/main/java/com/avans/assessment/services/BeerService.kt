@@ -16,8 +16,10 @@ class BeerService(ctx: Context) {
     private val context = WeakReference(ctx)
     private val settingsService: SettingsService = SettingsService(ctx)
 
+    private val Key: String = "minimum_alcohol"
+
     fun fetchBeers(page: Int, perPage: Int, callback: (result: List<Beer>) -> Unit) {
-        val minAlcohol: String = settingsService.get();
+        val minAlcohol: String = settingsService.getPreferenceByKey(Key);
 
         val stringRequest = GsonRequest(
             "https://api.punkapi.com/v2/beers?abv_gt=$minAlcohol&page=$page&per_page=$perPage",

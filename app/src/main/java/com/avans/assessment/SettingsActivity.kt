@@ -30,15 +30,12 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-            val settingsService = context?.let { SettingsService(it) }
             val preference = preferenceScreen.findPreference<EditTextPreference>("minimum_alcohol");
 
             preference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { pref, newValue ->
                 val value: String = newValue.toString()
 
                 if (value.isDigitsOnly() && value.isNotEmpty()){
-                    settingsService?.save(value)
-
                     return@OnPreferenceChangeListener true
                 }
 
@@ -47,7 +44,5 @@ class SettingsActivity : AppCompatActivity() {
                 false
             }
         }
-
-
     }
 }
