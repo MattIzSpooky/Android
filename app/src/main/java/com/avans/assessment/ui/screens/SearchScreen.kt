@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BeerListItem
-import com.avans.assessment.ui.components.Centered
+import com.avans.assessment.ui.components.general.Centered
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 
 @Composable
@@ -33,8 +33,15 @@ fun SearchScreen(context: Context, navController: NavHostController, searchText:
             )
         }
     ) {
+        val error = searchViewModel.error
+
+        if (error != null) {
+            ErrorScreen(error)
+            return@Scaffold
+        }
+
         Column(Modifier.fillMaxWidth()) {
-            SearchList(searchViewModel) {
+            SearchList(context, searchViewModel) {
                 navController.navigate("detail/${it.id}")
             }
         }
@@ -63,7 +70,7 @@ fun SearchInput(searchViewModel: SearchViewModel) {
 }
 
 @Composable
-fun SearchList(searchViewModel: SearchViewModel, itemClick: (Beer) -> Unit) {
+fun SearchList(context: Context, searchViewModel: SearchViewModel, itemClick: (Beer) -> Unit) {
     if (searchViewModel.isFetching) {
         CenteredProgressIndicator()
         return
@@ -79,7 +86,7 @@ fun SearchList(searchViewModel: SearchViewModel, itemClick: (Beer) -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(searchViewModel.searchResults) {
-                BeerListItem(item = it, onClick = itemClick)
+                BeerListItem(context, item = it, onClick = itemClick)
             }
         }
     }

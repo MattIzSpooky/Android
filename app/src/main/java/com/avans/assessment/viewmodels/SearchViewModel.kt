@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.avans.assessment.models.Beer
 import com.avans.assessment.services.BeerService
 
-class SearchViewModel(ctx: Context, initialSearchText: String = "") : ViewModel() {
+class SearchViewModel(ctx: Context, initialSearchText: String = "") : ApplicationViewModel() {
     private val beerService = BeerService(ctx)
 
     var searchText: String = initialSearchText
@@ -31,12 +31,22 @@ class SearchViewModel(ctx: Context, initialSearchText: String = "") : ViewModel(
 
         isFetching = true;
 
-        beerService.search(searchText) {
-            if (it.isNotEmpty()) {
-                searchResults = it
-            }
+        try {
+            beerService.search(searchText, onResponse = {
+                if (it.isNotEmpty()) {
+                    searchResults = it
+                }
 
-            isFetching = false;
+                isFetching = false;
+            }, onError = {
+                error = "Could not search"
+
+                isFetching = false;
+            })
+        } catch (e: Exception) {
+            error = e.message
+
+            isFetching = false
         }
     }
 }

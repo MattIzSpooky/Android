@@ -5,13 +5,15 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.provider.ContactsContract
 import androidx.core.content.ContextCompat
+import com.avans.assessment.exceptions.NoPermissionException
+import java.lang.NullPointerException
 import java.lang.ref.WeakReference
+import kotlin.jvm.Throws
 
-class ContactService(ctx: Context) {
-    private val context = WeakReference(ctx)
-
+class ContactService(ctx: Context) : BaseService(ctx) {
+    @Throws(NullPointerException::class, NoPermissionException::class)
     fun getContacts(): List<String> {
-        val ctx = context.get() ?: return ArrayList() // TODO: Show error message.
+        val ctx = retrieveContextOrThrow()
 
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
@@ -37,6 +39,6 @@ class ContactService(ctx: Context) {
             }
         }
 
-        return ArrayList()
+        throw NoPermissionException()
     }
 }

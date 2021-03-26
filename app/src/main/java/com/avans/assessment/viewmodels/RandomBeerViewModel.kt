@@ -7,8 +7,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.avans.assessment.models.Beer
 import com.avans.assessment.services.BeerService
+import java.lang.Exception
+import java.lang.NullPointerException
 
-class RandomBeerViewModel(ctx: Context) : ViewModel() {
+class RandomBeerViewModel(ctx: Context) : ApplicationViewModel() {
     private val beerService = BeerService(ctx)
 
     init {
@@ -18,8 +20,14 @@ class RandomBeerViewModel(ctx: Context) : ViewModel() {
     var beer: Beer? by mutableStateOf(null)
 
     private fun loadRandomBeer(){
-        beerService.fetchRandom {
-            beer = it
+        try {
+            beerService.fetchRandom(onResponse = {
+                beer = it
+            }, onError = {
+                error = "Could not load random beer."
+            })
+        } catch (e: Exception) {
+            error = e.message
         }
     }
 }

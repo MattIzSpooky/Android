@@ -7,8 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.avans.assessment.models.Beer
 import com.avans.assessment.services.BeerService
+import java.lang.Exception
 
-class BeerViewModel(ctx: Context, id: String) : ViewModel() {
+class BeerViewModel(ctx: Context, id: String) : ApplicationViewModel() {
     private val beerService = BeerService(ctx)
     private val beerId = id
 
@@ -19,8 +20,14 @@ class BeerViewModel(ctx: Context, id: String) : ViewModel() {
     var beer: Beer? by mutableStateOf(null)
 
     private fun loadBeer() {
-        beerService.fetchBeer(beerId) {
-            beer = it
+        try {
+            beerService.fetchBeer(beerId, onResponse = {
+                beer = it
+            }, onError = {
+                error = "Could not retrieve beer"
+            })
+        } catch (e: Exception) {
+            error = e.message
         }
     }
 }

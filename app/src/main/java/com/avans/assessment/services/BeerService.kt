@@ -6,84 +6,100 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.avans.assessment.R
+import com.avans.assessment.exceptions.NoInternetException
 import com.avans.assessment.models.Beer
-import com.avans.assessment.utils.GsonRequest
-import java.lang.ref.WeakReference
+import com.avans.assessment.network.ApiClient
+import com.avans.assessment.network.NetworkStatus
+import java.lang.NullPointerException
+import kotlin.jvm.Throws
 
-class BeerService(ctx: Context) {
-    private val context = WeakReference(ctx)
-    private val settingsService: SettingsService = SettingsService(ctx)
+class BeerService(ctx: Context) : BaseService(ctx) {
+    private val networkStatus = NetworkStatus(ctx)
 
-    private val Key: String = "minimum_alcohol"
-
-    fun fetchBeers(page: Int, perPage: Int, callback: (result: List<Beer>) -> Unit) {
-        val minAlcohol: String = settingsService.getPreferenceByKey(Key);
-
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers?abv_gt=$minAlcohol&page=$page&per_page=$perPage",
-            Array<Beer>::class.java,null,
-            { response ->
-                callback(response.toList())
-            },
-            {
-                print("Something went wrong")
-            })
-
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+    companion object {
+        private const val NOTIFICATION_CHANNEL_ID = "test_notification_channel"
     }
 
-    fun fetchBeer(id: String, callback: (result: Beer) -> Unit) {
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers/$id", Array<Beer>::class.java,null,
-            { response ->
-                callback(response[0])
-            },
-            {
-                print("Something went wrong")
-            })
+    @Throws(NullPointerException::class, NoInternetException::class)
+    fun fetchBeers(
+        page: Int,
+        perPage: Int,
+        onResponse: (result: List<Beer>) -> Unit,
+        onError: (result: String) -> Unit
+    ) {
+        if (!networkStatus.isConnected()) throw NoInternetException()
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
+
+        val url = client.createUrl("?page=$page&per_page=$perPage")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr.toList())
+        }, onError)
+
+        client.addToRequestQueue(request)
     }
 
-    fun fetchRandom(callback: (result: Beer) -> Unit) {
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers/random", Array<Beer>::class.java,null,
-            { response ->
-                callback(response[0])
-            },
-            {
-                print("Something went wrong")
-            })
+    @Throws(NullPointerException::class, NoInternetException::class)
+    fun fetchBeer(
+        id: String,
+        onResponse: (result: Beer) -> Unit,
+        onError: (result: String) -> Unit
+    ) {
+        if (!networkStatus.isConnected()) throw NoInternetException()
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
+
+        val url = client.createUrl("/$id")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr[0])
+        }, onError)
+
+        client.addToRequestQueue(request)
     }
 
-    fun search(beerName: String, callback: (result: List<Beer>) -> Unit) {
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers?beer_name=${beerName.replace(' ', '_')}", Array<Beer>::class.java,null,
-            { response ->
-                callback(response.toList())
-            },
-            {
-                print("Something went wrong")
-            })
+    @Throws(NullPointerException::class, NoInternetException::class)
+    fun fetchRandom(onResponse: (result: Beer) -> Unit,  onError: (result: String) -> Unit) {
+        if (!networkStatus.isConnected()) throw NoInternetException()
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
+
+        val url = client.createUrl("/random")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr[0])
+        }, onError)
+
+        client.addToRequestQueue(request)
     }
 
+    @Throws(NullPointerException::class, NoInternetException::class)
+    fun search(beerName: String, onResponse: (result: List<Beer>) -> Unit, onError: (result: String) -> Unit) {
+        if (!networkStatus.isConnected()) throw NoInternetException()
+
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
+
+        val url = client.createUrl("?beer_name=${beerName.replace(' ', '_')}")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr.toList())
+        }, onError)
+
+        client.addToRequestQueue(request)
+    }
+
+    @Throws(NullPointerException::class)
     fun sendNotification(beer: Beer) {
-        val ctx = context.get() ?: return  // TODO: Show error message.
+        val ctx = retrieveContextOrThrow()
 
         this.createNotificationChannel(ctx)
 
-        val builder = NotificationCompat.Builder(ctx, "test_notification_channel")
+        val builder = NotificationCompat.Builder(ctx, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(beer.name)
             .setContentText(beer.description)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(beer.description))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(beer.description)
+            )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(ctx)) {
@@ -98,11 +114,13 @@ class BeerService(ctx: Context) {
             val name = "Test notifications"
             val descriptionText = "Test description"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("test_notification_channel", name, importance).apply {
+            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
             // Register the channel with the system
-            val notificationManager: NotificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager: NotificationManager =
+                ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
             notificationManager.createNotificationChannel(channel)
         }
     }
