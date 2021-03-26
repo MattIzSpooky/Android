@@ -13,6 +13,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.navigation.NavHostController
 import com.avans.assessment.ui.components.BottomNavBar
+import com.avans.assessment.ui.components.Centered
 import com.avans.assessment.ui.components.FavoriteBeerListItem
 
 @Composable
@@ -32,7 +33,7 @@ fun FavoriteBeerList(favoriteBeersViewModel: FavoriteBeersViewModel) {
     val favorites = favoriteBeersViewModel.favoriteBeers
 
     if (favorites.isEmpty()) {
-        Column {
+        Centered {
             Text("You have no favorite beers.")
         }
         return;
