@@ -16,6 +16,8 @@ import kotlin.jvm.Throws
 
 class BeerService(ctx: Context) : BaseService(ctx) {
     private val networkStatus = NetworkStatus(ctx)
+    private val settingsService = SettingsService(ctx);
+    private val Key: String = "minimum_alcohol"
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "test_notification_channel"
@@ -32,7 +34,9 @@ class BeerService(ctx: Context) : BaseService(ctx) {
 
         val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-        val url = client.createUrl("?page=$page&per_page=$perPage")
+        val minAlcohol = settingsService.getPreferenceByKey(Key)
+
+        val url = client.createUrl("?abv_gt=$minAlcohol&page=$page&per_page=$perPage")
         val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
             onResponse(beerArr.toList())
         }, onError)
