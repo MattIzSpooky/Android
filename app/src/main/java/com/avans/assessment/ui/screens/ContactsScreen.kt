@@ -36,6 +36,13 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
             TopAppBar(title = { Text("Contacts") })
         }
     ) {
+        val error = contactsViewModel.error
+
+        if (error != null) {
+            ErrorScreen(error)
+            return@Scaffold
+        }
+
         when {
             ContextCompat.checkSelfPermission(
                 context,

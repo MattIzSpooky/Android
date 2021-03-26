@@ -27,7 +27,7 @@ class RandomScreen() : Fragment() {
                 Scaffold(
                     topBar = {
                         TopAppBar(
-                            title = { Text("Random beer")},
+                            title = { Text("Random beer") },
                             navigationIcon = {
                                 IconButton(onClick = {
                                     activity?.onBackPressed()
@@ -37,13 +37,26 @@ class RandomScreen() : Fragment() {
                             },
                         )
                     }
-                ){
-                    if (randomBeerViewModel.beer == null) {
-                        CenteredProgressIndicator()
-                    } else {
-                        // TODO fix non null asserted
-                        BeerDetail(container!!.context, randomBeerViewModel.beer!!)
+                ) {
+                    val error = randomBeerViewModel.error
+                    val beer = randomBeerViewModel.beer
+
+                    if (error != null) {
+                        ErrorScreen(error)
+                        return@Scaffold
                     }
+
+                    if (beer == null) {
+                        CenteredProgressIndicator()
+                        return@Scaffold
+                    }
+
+                    if (container == null) {
+                        ErrorScreen("Container is empty")
+                        return@Scaffold
+                    }
+
+                    BeerDetail(container.context, beer)
                 }
             }
         }

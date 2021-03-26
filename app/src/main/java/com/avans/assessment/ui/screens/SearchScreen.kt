@@ -33,6 +33,13 @@ fun SearchScreen(context: Context, navController: NavHostController, searchText:
             )
         }
     ) {
+        val error = searchViewModel.error
+
+        if (error != null) {
+            ErrorScreen(error)
+            return@Scaffold
+        }
+
         Column(Modifier.fillMaxWidth()) {
             SearchList(context, searchViewModel) {
                 navController.navigate("detail/${it.id}")

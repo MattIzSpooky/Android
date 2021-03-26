@@ -2,21 +2,15 @@ package com.avans.assessment.ui.screens
 
 import android.content.Context
 import android.content.res.Configuration
-import android.widget.ScrollView
-import android.widget.Scroller
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.core.view.ScrollingView
 import androidx.navigation.NavHostController
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BottomNavBar
@@ -34,8 +28,6 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
 
     }
     val beerViewModel = BeerViewModel(context, id)
-    val beer = beerViewModel.beer
-    val error = beerViewModel.error
 
     Scaffold(
         bottomBar = { BottomNavBar(context, navController) },
@@ -52,10 +44,11 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
             )
         }
     ) {
+        val error = beerViewModel.error
+        val beer = beerViewModel.beer
+
         if (error != null) {
-            Centered {
-                Text(error)
-            }
+            ErrorScreen(error)
             return@Scaffold
         }
 
@@ -67,6 +60,7 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
         BeerDetail(context, beer)
     }
 }
+
 
 @Composable
 fun DetailScreenWithoutBottom(context: Context, navController: NavHostController, id: String?) {

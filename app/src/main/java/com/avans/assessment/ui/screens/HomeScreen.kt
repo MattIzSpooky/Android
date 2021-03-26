@@ -30,9 +30,7 @@ fun HomeScreen(context: Context, navController: NavHostController){
         val error = beerListViewModel.error
 
         if (error != null) {
-            Centered {
-                Text("Error: $error")
-            }
+            ErrorScreen(error)
             return@Scaffold
         }
 

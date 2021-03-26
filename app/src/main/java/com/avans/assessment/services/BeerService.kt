@@ -37,7 +37,7 @@ class BeerService(ctx: Context) : BaseService(ctx) {
     ) {
         val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-        val url = client.createUrl("/1000")
+        val url = client.createUrl("/$id")
         val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
             onResponse(beerArr[0])
         }, onError)
