@@ -24,6 +24,13 @@ fun FavoriteScreen(context: Context, navController: NavHostController){
         bottomBar =  { BottomNavBar(context,navController) } ,
         topBar = { TopAppBar(title = { Text("Favorites")}) }
     ){
+        val error = favoriteBeersViewModel.error
+
+        if (error != null) {
+            ErrorScreen(error)
+            return@Scaffold
+        }
+
         FavoriteBeerList(favoriteBeersViewModel)
     }
 }

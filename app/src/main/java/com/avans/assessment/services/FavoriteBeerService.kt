@@ -9,8 +9,7 @@ import com.avans.assessment.db.entities.FavoriteBeer
 import com.avans.assessment.models.Beer
 import java.lang.ref.WeakReference
 
-class FavoriteBeerService(ctx: Context) {
-    private val context = WeakReference(ctx)
+class FavoriteBeerService(ctx: Context) : BaseService(ctx) {
     private val db = Room
         .databaseBuilder(ctx, AppDatabase::class.java, "beer-database")
         .build()
@@ -39,8 +38,6 @@ class FavoriteBeerService(ctx: Context) {
     }
 
     fun share(beer: FavoriteBeer) {
-        val ctx = context.get() ?: return  // TODO: Show error message.
-
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, beer.name)
@@ -49,7 +46,7 @@ class FavoriteBeerService(ctx: Context) {
 
         val shareIntent = Intent.createChooser(sendIntent, "Share your beer!")
         shareIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(ctx, shareIntent, null)
+        startActivity(retrieveContextOrThrow(), shareIntent, null)
     }
 
     protected fun finalize() {

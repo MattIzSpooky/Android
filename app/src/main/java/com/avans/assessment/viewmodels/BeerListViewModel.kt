@@ -11,8 +11,10 @@ import com.avans.assessment.db.entities.FavoriteBeer
 import com.avans.assessment.services.FavoriteBeerService
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.*
+import java.lang.Exception
+import java.lang.NullPointerException
 
-class BeerListViewModel(ctx: Context) : ViewModel() {
+class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
     private val beerService = BeerService(ctx)
     private val favoriteBeerService = FavoriteBeerService(ctx)
 
@@ -27,17 +29,23 @@ class BeerListViewModel(ctx: Context) : ViewModel() {
     }
 
     fun loadBeers(callBack: (() -> Unit)? = null) {
-        beerService.fetchBeers(page = page, perPage = perPage) {
-            if (it.isNotEmpty()) {
-                beers = (beers + it).sortedBy { beer -> beer.id }
-            }
+        try {
+            beerService.fetchBeers(page = page, perPage = perPage, onResponse = {
+                if (it.isNotEmpty()) {
+                    beers = (beers + it).sortedBy { beer -> beer.id }
+                }
 
-            if (callBack != null) {
-                callBack()
-            }
+                if (callBack != null) {
+                    callBack()
+                }
+            }, onError = {
+                error = it
+            })
+
+            page += 1
+        } catch (e: Exception) {
+            error = e.message
         }
-
-        page += 1
     }
 
     fun favoriteBeer(beer: Beer) {

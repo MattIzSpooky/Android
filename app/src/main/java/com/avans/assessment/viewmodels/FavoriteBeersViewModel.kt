@@ -10,7 +10,7 @@ import com.avans.assessment.services.FavoriteBeerService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class FavoriteBeersViewModel(ctx: Context) : ViewModel() {
+class FavoriteBeersViewModel(ctx: Context) : ApplicationViewModel() {
     private val favoriteBeerService = FavoriteBeerService(ctx)
 
     var favoriteBeers: List<FavoriteBeer> by mutableStateOf(listOf())
