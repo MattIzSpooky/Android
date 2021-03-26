@@ -26,7 +26,6 @@ class FavoriteBeerService(ctx: Context) : BaseService(ctx) {
             beer.name,
             beer.tagline,
             beer.firstBrewed,
-            beer.description,
             beer.imageUrl
         )
 

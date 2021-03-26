@@ -23,7 +23,7 @@ fun NetworkImage(context: Context, url: String, modifier: Modifier = Modifier) {
 @Composable
 private fun ImageContainer(networkImageViewModel: NetworkImageViewModel, url: String, modifier: Modifier) {
     if (networkImageViewModel.isFetching) {
-        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally))
+        CircularProgressIndicator(modifier)
         return
     }
 

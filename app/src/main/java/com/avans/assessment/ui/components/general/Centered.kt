@@ -1,4 +1,4 @@
-package com.avans.assessment.ui.components
+package com.avans.assessment.ui.components.general
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

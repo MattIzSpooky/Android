@@ -21,6 +21,9 @@ class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
     var beers: List<Beer> by mutableStateOf(listOf())
         private set
 
+    var isFetching: Boolean by mutableStateOf(false)
+        private set
+
     private var page = 1
     private val perPage = 50
 
@@ -28,23 +31,26 @@ class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
         loadBeers()
     }
 
-    fun loadBeers(callBack: (() -> Unit)? = null) {
+    fun loadBeers() {
+        isFetching = true
+
         try {
             beerService.fetchBeers(page = page, perPage = perPage, onResponse = {
                 if (it.isNotEmpty()) {
                     beers = (beers + it).sortedBy { beer -> beer.id }
                 }
 
-                if (callBack != null) {
-                    callBack()
-                }
+                isFetching = false
             }, onError = {
                 error = it
+
+                isFetching = false
             })
 
             page += 1
         } catch (e: Exception) {
             error = e.message
+            isFetching = false
         }
     }
 
