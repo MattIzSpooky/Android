@@ -31,16 +31,22 @@ class SearchViewModel(ctx: Context, initialSearchText: String = "") : Applicatio
 
         isFetching = true;
 
-        beerService.search(searchText, onResponse = {
-            if (it.isNotEmpty()) {
-                searchResults = it
-            }
+        try {
+            beerService.search(searchText, onResponse = {
+                if (it.isNotEmpty()) {
+                    searchResults = it
+                }
 
-            isFetching = false;
-        }, onError = {
-            error = "Could not search"
+                isFetching = false;
+            }, onError = {
+                error = "Could not search"
 
-            isFetching = false;
-        })
+                isFetching = false;
+            })
+        } catch (e: Exception) {
+            error = e.message
+
+            isFetching = false
+        }
     }
 }

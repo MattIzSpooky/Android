@@ -3,7 +3,9 @@ package com.avans.assessment.background
 import android.app.Service
 import android.content.Intent
 import android.os.*
+import com.avans.assessment.exceptions.NoInternetException
 import com.avans.assessment.services.BeerService
+import java.lang.NullPointerException
 import java.util.Timer
 import java.util.TimerTask
 
@@ -32,12 +34,17 @@ class RandomBeerNotificationService : Service() {
 
         override fun handleMessage(msg: Message) {
             try {
-//                beerService.fetchRandom {
-//                    beerService.sendNotification(it)
-//                }
+                beerService.fetchRandom(onResponse = {
+                    beerService.sendNotification(it)
+                }, onError = {
+                    print("kaput")
+                })
+            } catch (e: NullPointerException) {
+                print("Context was null")
+            } catch (e: NoInternetException) {
+                print("No internet")
             } catch (e: InterruptedException) {
-                // Restore interrupt status.
-                Thread.currentThread().interrupt()
+                Thread.currentThread().interrupt()  // Restore interrupt status.
             }
         }
     }

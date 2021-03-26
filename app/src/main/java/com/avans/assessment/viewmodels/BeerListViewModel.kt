@@ -11,6 +11,7 @@ import com.avans.assessment.db.entities.FavoriteBeer
 import com.avans.assessment.services.FavoriteBeerService
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.*
+import java.lang.Exception
 import java.lang.NullPointerException
 
 class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
@@ -42,7 +43,7 @@ class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
             })
 
             page += 1
-        } catch (e: NullPointerException) {
+        } catch (e: Exception) {
             error = e.message
         }
     }
