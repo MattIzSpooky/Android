@@ -41,7 +41,8 @@ class RandomScreen() : Fragment() {
                     if (randomBeerViewModel.beer == null) {
                         CenteredProgressIndicator()
                     } else {
-                        BeerDetail(randomBeerViewModel.beer!!)
+                        // TODO fix non null asserted
+                        BeerDetail(container!!.context, randomBeerViewModel.beer!!)
                     }
                 }
             }

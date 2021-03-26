@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.BeerListItem
@@ -24,12 +25,12 @@ fun HomeScreen(context: Context, navController: NavHostController){
             TopAppBar(title = { Text("Beers")},)
         }
     ){
-        BeerList(beerListViewModel, navController)
+        BeerList(context, beerListViewModel, navController)
     }
 }
 
 @Composable
-fun BeerList(beerListViewModel: BeerListViewModel, navController: NavHostController) {
+fun BeerList(context: Context, beerListViewModel: BeerListViewModel, navController: NavHostController) {
     val beers = beerListViewModel.beers
     val (isFetching, setIsFetching) = remember {
         mutableStateOf(false)
@@ -43,10 +44,10 @@ fun BeerList(beerListViewModel: BeerListViewModel, navController: NavHostControl
     Box(modifier = Modifier.fillMaxSize()) {
         val lastIndex = beers.lastIndex
 
-        LazyColumn {
+        LazyColumn(modifier = Modifier.padding(bottom = 55.dp)) {
             itemsIndexed(beers) { index, beer ->
                 key(beer.id) {
-                    BeerListItem(beer, onClick = {
+                    BeerListItem(context, beer, onClick = {
                         navController.navigate("detail/${beer.id}")
                     }, onLongPress = {
                         beerListViewModel.favoriteBeer(beer)
