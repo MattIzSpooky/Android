@@ -11,6 +11,9 @@ import androidx.preference.PreferenceFragmentCompat
 import com.avans.assessment.services.SettingsService
 
 class SettingsActivity : AppCompatActivity() {
+    companion object {
+        private const val MAX_MINIMUM_ALCOHOL = 50
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,8 @@ class SettingsActivity : AppCompatActivity() {
                 val value: String = newValue.toString()
 
                 if (value.isDigitsOnly() && value.isNotEmpty()){
-                    return@OnPreferenceChangeListener true
+                    if(value.toInt() < MAX_MINIMUM_ALCOHOL)
+                        return@OnPreferenceChangeListener true
                 }
 
                 Toast.makeText(context,"Validation Failed", Toast.LENGTH_SHORT).show()
