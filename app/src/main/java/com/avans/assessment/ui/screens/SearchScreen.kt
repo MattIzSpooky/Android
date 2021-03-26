@@ -3,22 +3,18 @@ package com.avans.assessment.ui.screens
 import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.avans.assessment.viewmodels.SearchViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BeerListItem
 import com.avans.assessment.ui.components.general.Centered
-import com.avans.assessment.ui.components.CenteredProgressIndicator
+import com.avans.assessment.ui.components.general.CenteredProgressIndicator
+import com.avans.assessment.viewmodels.SearchViewModel
 
 @Composable
 fun SearchScreen(context: Context, navController: NavHostController, searchText: String = "") {

@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.avans.assessment.models.Beer
 import com.avans.assessment.ui.components.BottomNavBar
-import com.avans.assessment.ui.components.CenteredProgressIndicator
-import com.avans.assessment.ui.components.NetworkImage
 import com.avans.assessment.ui.components.general.Centered
+import com.avans.assessment.ui.components.general.CenteredProgressIndicator
+import com.avans.assessment.ui.components.general.NetworkImage
 import com.avans.assessment.ui.theme.Typography
 import com.avans.assessment.viewmodels.BeerViewModel
 
@@ -27,7 +27,6 @@ fun DetailScreen(context: Context, navController: NavHostController, id: String?
     if (id == null) {
         CenteredProgressIndicator()
         return
-
     }
     val beerViewModel = BeerViewModel(context, id)
 

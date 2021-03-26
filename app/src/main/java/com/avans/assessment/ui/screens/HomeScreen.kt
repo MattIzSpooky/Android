@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.BeerListItem
 import com.avans.assessment.ui.components.BottomNavBar
-import com.avans.assessment.ui.components.CenteredProgressIndicator
+import com.avans.assessment.ui.components.general.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.BeerListViewModel
 
 @Composable

@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.BottomNavBar
+import com.avans.assessment.ui.components.ContactListItem
 import com.avans.assessment.ui.components.general.Centered
 import com.avans.assessment.viewmodels.ContactsViewModel
 
@@ -64,7 +65,7 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     LazyColumn() {
                         items(contactsViewModel.contacts) {
-                            Text(it)
+                            ContactListItem(it)
                         }
                     }
                 }
