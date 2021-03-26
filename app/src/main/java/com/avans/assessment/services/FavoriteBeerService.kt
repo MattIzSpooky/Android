@@ -7,7 +7,6 @@ import androidx.room.Room
 import com.avans.assessment.db.AppDatabase
 import com.avans.assessment.db.entities.FavoriteBeer
 import com.avans.assessment.models.Beer
-import java.lang.ref.WeakReference
 
 class FavoriteBeerService(ctx: Context) : BaseService(ctx) {
     private val db = Room

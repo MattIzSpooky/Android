@@ -3,16 +3,13 @@ package com.avans.assessment.viewmodels
 import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
+import androidx.compose.runtime.setValue
+import com.avans.assessment.exceptions.NoInternetException
 import com.avans.assessment.models.Beer
 import com.avans.assessment.services.BeerService
-import androidx.compose.runtime.setValue
-import com.avans.assessment.db.entities.FavoriteBeer
 import com.avans.assessment.services.FavoriteBeerService
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.*
-import java.lang.Exception
-import java.lang.NullPointerException
 
 class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
     private val beerService = BeerService(ctx)
@@ -48,10 +45,16 @@ class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
             })
 
             page += 1
-        } catch (e: Exception) {
-            error = e.message
-            isFetching = false
+        } catch (nullPointerException: NullPointerException) {
+            handleException(nullPointerException)
+        } catch (noInternetException: NoInternetException) {
+            handleException(noInternetException)
         }
+    }
+
+    private fun handleException(exception: Exception) {
+        error = exception.message
+        isFetching = false
     }
 
     fun favoriteBeer(beer: Beer) {

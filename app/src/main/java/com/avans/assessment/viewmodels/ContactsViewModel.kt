@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.avans.assessment.exceptions.NoPermissionException
 import com.avans.assessment.services.ContactService
-import java.lang.Exception
 
 class ContactsViewModel(ctx: Context) : ApplicationViewModel() {
     private val contactsService = ContactService(ctx)
@@ -16,8 +16,10 @@ class ContactsViewModel(ctx: Context) : ApplicationViewModel() {
     init {
         try {
             contacts = contactsService.getContacts()
-        } catch (e: Exception) {
-            error = e.message
+        } catch (nullPointerException: NullPointerException) {
+            error = nullPointerException.message
+        } catch (noPermissionException: NoPermissionException) {
+            error = noPermissionException.message
         }
     }
 }
