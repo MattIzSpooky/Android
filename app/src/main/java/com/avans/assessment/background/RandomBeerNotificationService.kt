@@ -32,9 +32,9 @@ class RandomBeerNotificationService : Service() {
 
         override fun handleMessage(msg: Message) {
             try {
-                beerService.fetchRandom {
-                    beerService.sendNotification(it)
-                }
+//                beerService.fetchRandom {
+//                    beerService.sendNotification(it)
+//                }
             } catch (e: InterruptedException) {
                 // Restore interrupt status.
                 Thread.currentThread().interrupt()

@@ -30,30 +30,41 @@ import com.avans.assessment.viewmodels.BeerViewModel
 fun DetailScreen(context: Context, navController: NavHostController, id: String?) {
     if (id == null) {
         CenteredProgressIndicator()
-    } else {
-        val beerViewModel = BeerViewModel(context, id)
+        return
 
-        Scaffold(
-            bottomBar = { BottomNavBar(context, navController) },
-            topBar = {
-                TopAppBar(
-                    title = { Text("Beer") },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navController.popBackStack()
-                        }) {
-                            Icon(Icons.Filled.ArrowBack, "back")
-                        }
-                    },
-                )
-            }
-        ) {
-            if (beerViewModel.beer == null) {
-                CenteredProgressIndicator()
-            } else {
-                BeerDetail(context, beerViewModel.beer!!)
-            }
+    }
+    val beerViewModel = BeerViewModel(context, id)
+    val beer = beerViewModel.beer
+    val error = beerViewModel.error
+
+    Scaffold(
+        bottomBar = { BottomNavBar(context, navController) },
+        topBar = {
+            TopAppBar(
+                title = { Text("Beer") },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(Icons.Filled.ArrowBack, "back")
+                    }
+                },
+            )
         }
+    ) {
+        if (error != null) {
+            Centered {
+                Text(error)
+            }
+            return@Scaffold
+        }
+
+        if (beer == null) {
+            CenteredProgressIndicator()
+            return@Scaffold
+        }
+
+        BeerDetail(context, beer)
     }
 }
 

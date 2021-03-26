@@ -4,11 +4,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
-import java.lang.ref.WeakReference
+import com.avans.assessment.network.ApiClient
 
-class NetworkImageService(ctx: Context ) {
-    private val context = WeakReference(ctx)
-
+class NetworkImageService(ctx: Context) : BaseService(ctx) {
     fun fetchImage(url: String, cropType: ImageView.ScaleType, callback: (result: Bitmap) -> Unit) {
         val imageRequest = ImageRequest(url, { response ->
             callback(response)
@@ -17,7 +15,6 @@ class NetworkImageService(ctx: Context ) {
                 print("Something went wrong")
             })
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(imageRequest) }
+        ApiClient.getInstance(retrieveContextOrThrow()).addToRequestQueue(imageRequest)
     }
-
 }

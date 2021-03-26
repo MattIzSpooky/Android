@@ -6,69 +6,69 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.avans.assessment.R
 import com.avans.assessment.models.Beer
-import com.avans.assessment.utils.GsonRequest
-import java.lang.ref.WeakReference
+import com.avans.assessment.network.ApiClient
+import java.lang.NullPointerException
+import kotlin.jvm.Throws
 
-class BeerService(ctx: Context) {
-    private val context = WeakReference(ctx)
+class BeerService(ctx: Context) : BaseService(ctx) {
+    @Throws(NullPointerException::class)
+    fun fetchBeers(
+        page: Int,
+        perPage: Int,
+        onResponse: (result: List<Beer>) -> Unit,
+        onError: (result: String) -> Unit
+    ) {
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-    fun fetchBeers(page: Int, perPage: Int, callback: (result: List<Beer>) -> Unit) {
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers?page=$page&per_page=$perPage", Array<Beer>::class.java,null,
-            { response ->
-                callback(response.toList())
-            },
-            {
-                print("Something went wrong")
-            })
+        val url = client.createUrl("?page=$page&per_page=$perPage")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr.toList())
+        }, onError)
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+        client.addToRequestQueue(request)
     }
 
-    fun fetchBeer(id: String, callback: (result: Beer) -> Unit) {
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers/$id", Array<Beer>::class.java,null,
-            { response ->
-                callback(response[0])
-            },
-            {
-                print("Something went wrong")
-            })
+    fun fetchBeer(
+        id: String,
+        onResponse: (result: Beer) -> Unit,
+        onError: (result: String) -> Unit
+    ) {
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+        val url = client.createUrl("/1000")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr[0])
+        }, onError)
+
+        client.addToRequestQueue(request)
     }
 
-    fun fetchRandom(callback: (result: Beer) -> Unit) {
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers/random", Array<Beer>::class.java,null,
-            { response ->
-                callback(response[0])
-            },
-            {
-                print("Something went wrong")
-            })
+    fun fetchRandom(onResponse: (result: Beer) -> Unit,  onError: (result: String) -> Unit) {
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+        val url = client.createUrl("/random")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr[0])
+        }, onError)
+
+        client.addToRequestQueue(request)
     }
 
-    fun search(beerName: String, callback: (result: List<Beer>) -> Unit) {
-        val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers?beer_name=${beerName.replace(' ', '_')}", Array<Beer>::class.java,null,
-            { response ->
-                callback(response.toList())
-            },
-            {
-                print("Something went wrong")
-            })
+    fun search(beerName: String, onResponse: (result: List<Beer>) -> Unit, onError: (result: String) -> Unit) {
+        val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-        this.context.get()?.let { ApiClient.getInstance(it).addToRequestQueue(stringRequest) }
+        val url = client.createUrl("?beer_name=${beerName.replace(' ', '_')}")
+        val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
+            onResponse(beerArr.toList())
+        }, onError)
+
+        client.addToRequestQueue(request)
     }
 
     fun sendNotification(beer: Beer) {
-        val ctx = context.get() ?: return  // TODO: Show error message.
+        val ctx = retrieveContextOrThrow()
 
         this.createNotificationChannel(ctx)
 
@@ -76,8 +76,10 @@ class BeerService(ctx: Context) {
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(beer.name)
             .setContentText(beer.description)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(beer.description))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(beer.description)
+            )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(ctx)) {
@@ -96,7 +98,8 @@ class BeerService(ctx: Context) {
                 description = descriptionText
             }
             // Register the channel with the system
-            val notificationManager: NotificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager: NotificationManager =
+                ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }

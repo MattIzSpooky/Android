@@ -1,6 +1,7 @@
 package com.avans.assessment.ui.screens
 
 import android.content.Context
+import android.graphics.Color
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -12,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.ui.components.BeerListItem
 import com.avans.assessment.ui.components.BottomNavBar
+import com.avans.assessment.ui.components.Centered
 import com.avans.assessment.ui.components.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.BeerListViewModel
 
@@ -22,9 +24,18 @@ fun HomeScreen(context: Context, navController: NavHostController){
     Scaffold(
         bottomBar =  { BottomNavBar(context,navController) },
         topBar = {
-            TopAppBar(title = { Text("Beers")},)
+            TopAppBar(title = { Text("Beers")})
         }
     ){
+        val error = beerListViewModel.error
+
+        if (error != null) {
+            Centered {
+                Text("Error: $error")
+            }
+            return@Scaffold
+        }
+
         BeerList(context, beerListViewModel, navController)
     }
 }
