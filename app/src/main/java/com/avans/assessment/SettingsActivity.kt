@@ -1,6 +1,7 @@
 package com.avans.assessment
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
@@ -23,6 +24,14 @@ class SettingsActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Settings"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id: Int = item.itemId
+        if (id == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
