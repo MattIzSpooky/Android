@@ -21,6 +21,5 @@ fun ContactListItem(name: String) {
         Box(modifier = Modifier.fillMaxWidth().padding(20.dp)) {
             Text(name)
         }
-
     }
 }

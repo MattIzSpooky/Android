@@ -23,18 +23,23 @@ class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
 
     private var page = 1
     private val perPage = 50
+    private var canLoadMore = true
 
     init {
         loadBeers()
     }
 
     fun loadBeers() {
+        if (!canLoadMore) return
+
         isFetching = true
 
         try {
             beerService.fetchBeers(page = page, perPage = perPage, onResponse = {
                 if (it.isNotEmpty()) {
                     beers = (beers + it).sortedBy { beer -> beer.id }
+                } else {
+                    canLoadMore = false
                 }
 
                 isFetching = false
