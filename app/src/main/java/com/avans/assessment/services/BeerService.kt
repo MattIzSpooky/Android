@@ -34,9 +34,13 @@ class BeerService(ctx: Context) : BaseService(ctx) {
 
         val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-        val minAlcohol = settingsService.getPreferenceByKey(Key)
+        val alcoholPreference = settingsService.getPreferenceByKey(Key)
 
-        val url = client.createUrl("?abv_gt=$minAlcohol&page=$page&per_page=$perPage")
+        var alcoholPercentage = ""
+        if(alcoholPreference != "")
+            alcoholPercentage = "abv_gt=$alcoholPreference"
+
+        val url = client.createUrl("?$alcoholPercentage&page=$page&per_page=$perPage")
         val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
             onResponse(beerArr.toList())
         }, onError)
