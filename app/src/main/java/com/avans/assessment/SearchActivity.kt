@@ -1,16 +1,16 @@
 package com.avans.assessment
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.avans.assessment.ui.screens.*
-import com.avans.assessment.ui.screens.DetailScreen
+import com.avans.assessment.ui.screens.DetailScreenWithoutBottom
+import com.avans.assessment.ui.screens.SearchScreen
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
 
 class SearchActivity : AppCompatActivity() {

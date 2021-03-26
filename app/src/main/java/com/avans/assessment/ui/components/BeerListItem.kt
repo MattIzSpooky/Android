@@ -13,6 +13,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.avans.assessment.models.Beer
+import com.avans.assessment.ui.components.general.NetworkImage
 import com.avans.assessment.ui.theme.Typography
 
 @Composable

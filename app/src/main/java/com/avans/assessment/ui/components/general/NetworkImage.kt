@@ -1,12 +1,10 @@
-package com.avans.assessment.ui.components
+package com.avans.assessment.ui.components.general
 
 import android.content.Context
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import com.avans.assessment.viewmodels.NetworkImageViewModel
@@ -27,8 +25,8 @@ private fun ImageContainer(networkImageViewModel: NetworkImageViewModel, url: St
         return
     }
 
-    if (networkImageViewModel.image == null) {
-        Text("Could not load: $url")
+    if (networkImageViewModel.image == null && networkImageViewModel.error != null) {
+        Text("X")
         return
     }
 

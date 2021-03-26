@@ -6,9 +6,6 @@ import android.content.pm.PackageManager
 import android.provider.ContactsContract
 import androidx.core.content.ContextCompat
 import com.avans.assessment.exceptions.NoPermissionException
-import java.lang.NullPointerException
-import java.lang.ref.WeakReference
-import kotlin.jvm.Throws
 
 class ContactService(ctx: Context) : BaseService(ctx) {
     @Throws(NullPointerException::class, NoPermissionException::class)

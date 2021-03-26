@@ -1,11 +1,10 @@
 package com.avans.assessment.viewmodels
 
 import android.content.Context
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
+import com.avans.assessment.exceptions.NoInternetException
 import com.avans.assessment.models.Beer
 import com.avans.assessment.services.BeerService
 
@@ -43,10 +42,15 @@ class SearchViewModel(ctx: Context, initialSearchText: String = "") : Applicatio
 
                 isFetching = false;
             })
-        } catch (e: Exception) {
-            error = e.message
-
-            isFetching = false
+        } catch (nullPointerException: NullPointerException) {
+            handleException(nullPointerException)
+        } catch (noInternetException: NoInternetException) {
+            handleException(noInternetException)
         }
+    }
+
+    private fun handleException(exception: Exception) {
+        error = exception.message
+        isFetching = false
     }
 }

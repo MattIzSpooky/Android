@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.avans.assessment.exceptions.NoInternetException
 import com.avans.assessment.services.NetworkImageService
 
 class NetworkImageViewModel(ctx: Context) : ApplicationViewModel() {
@@ -17,14 +18,23 @@ class NetworkImageViewModel(ctx: Context) : ApplicationViewModel() {
     var isFetching by mutableStateOf(false)
 
     fun loadImage(url: String) {
-        isFetching = true
+        try {
+            isFetching = true
 
-        networkImageService.fetchImage(url, ImageView.ScaleType.CENTER_CROP, onResponse = {
-            image = it
+            networkImageService.fetchImage(url, ImageView.ScaleType.CENTER_CROP, onResponse = {
+                image = it
 
+                isFetching = false
+            }, onError = {
+                error = it
+            })
+        } catch (nullPointerException: NullPointerException) {
+            error = nullPointerException.message
             isFetching = false
-        }, onError = {
-            error = it
-        })
+        } catch (noInternetException: NoInternetException) {
+            error = noInternetException.message
+            isFetching = false
+        }
+
     }
 }

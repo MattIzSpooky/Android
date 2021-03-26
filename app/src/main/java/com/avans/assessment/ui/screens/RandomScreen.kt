@@ -10,8 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.avans.assessment.ui.components.CenteredProgressIndicator
-import com.avans.assessment.viewmodels.BeerViewModel
+import com.avans.assessment.ui.components.general.CenteredProgressIndicator
 import com.avans.assessment.viewmodels.RandomBeerViewModel
 
 class RandomScreen() : Fragment() {
