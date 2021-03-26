@@ -4,10 +4,7 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
@@ -17,6 +14,7 @@ fun BottomBar(
     favoriteListener: () -> Unit,
     randomListener: () -> Unit,
     contactListener: () -> Unit,
+    settingsListener: () -> Unit,
 ) {
     BottomAppBar {
         IconButton(
@@ -42,6 +40,12 @@ fun BottomBar(
             onClick = randomListener
         ) {
             Icon(Icons.Filled.Refresh, "random")
+        }
+        IconButton(
+            modifier = Modifier.weight(1f),
+            onClick = settingsListener
+        ) {
+            Icon(Icons.Filled.Settings, "settings")
         }
     }
 }

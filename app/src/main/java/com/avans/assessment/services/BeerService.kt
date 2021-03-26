@@ -14,10 +14,14 @@ import java.lang.ref.WeakReference
 
 class BeerService(ctx: Context) {
     private val context = WeakReference(ctx)
+    private val settingsService: SettingsService = SettingsService(ctx)
 
     fun fetchBeers(page: Int, perPage: Int, callback: (result: List<Beer>) -> Unit) {
+        val minAlcohol: String = settingsService.get();
+
         val stringRequest = GsonRequest(
-            "https://api.punkapi.com/v2/beers?page=$page&per_page=$perPage", Array<Beer>::class.java,null,
+            "https://api.punkapi.com/v2/beers?abv_gt=$minAlcohol&page=$page&per_page=$perPage",
+            Array<Beer>::class.java,null,
             { response ->
                 callback(response.toList())
             },
