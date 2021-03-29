@@ -31,6 +31,12 @@ fun FavoriteScreen(context: Context, navController: NavHostController) {
             return@Scaffold
         }
 
+        DisposableEffect(Unit) {
+            onDispose {
+               favoriteBeersViewModel.destroy()
+            }
+        }
+
         FavoriteBeerList(context, favoriteBeersViewModel, navController)
     }
 }

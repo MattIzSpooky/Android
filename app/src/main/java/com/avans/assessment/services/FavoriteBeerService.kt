@@ -47,7 +47,7 @@ class FavoriteBeerService(ctx: Context) : BaseService(ctx) {
         startActivity(retrieveContextOrThrow(), shareIntent, null)
     }
 
-    protected fun finalize() {
+    fun closeConnection() {
         db.close()
     }
 }

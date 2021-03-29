@@ -16,18 +16,33 @@ import com.avans.assessment.ui.screens.DetailScreen
 import com.avans.assessment.ui.screens.FavoriteScreen
 import com.avans.assessment.ui.screens.HomeScreen
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
+import android.os.StrictMode.VmPolicy
+
+import android.os.StrictMode
+
+
+
 
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        StrictMode.setVmPolicy(
+            VmPolicy.Builder()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .build()
+        )
+
         super.onCreate(savedInstanceState)
         context = this.applicationContext
 
         Intent(this, RandomBeerNotificationService::class.java).also { intent ->
             startService(intent)
         }
+
+
 
         setContent {
             AvansandroidassessmentTheme {
