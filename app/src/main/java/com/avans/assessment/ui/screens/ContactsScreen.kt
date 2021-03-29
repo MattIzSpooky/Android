@@ -55,6 +55,8 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
                 }
             }
             else -> {
+                contactsViewModel.loadContacts()
+
                 if (contactsViewModel.contacts.isEmpty()) {
                     Centered {
                         Text("No contacts")

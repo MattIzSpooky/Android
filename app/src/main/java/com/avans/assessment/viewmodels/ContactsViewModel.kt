@@ -13,7 +13,7 @@ class ContactsViewModel(ctx: Context) : ApplicationViewModel() {
     var contacts: List<String> by mutableStateOf(listOf())
         private set
 
-    init {
+    fun loadContacts() {
         try {
             contacts = contactsService.getContacts()
         } catch (nullPointerException: NullPointerException) {
