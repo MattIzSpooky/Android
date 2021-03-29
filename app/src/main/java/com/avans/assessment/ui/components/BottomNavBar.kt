@@ -8,13 +8,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.RandomActivity
 import com.avans.assessment.SettingsActivity
+import com.avans.assessment.ui.Routes
 
 @Composable
 fun BottomNavBar(context: Context, navController: NavHostController){
     BottomBar(
-        homeListener = { route(navController, "home")  },
-        favoriteListener = { route(navController, "favorites") },
-        contactListener = { route(navController, "contacts") },
+        homeListener = { route(navController, Routes.HOME)  },
+        favoriteListener = { route(navController, Routes.FAVORITES) },
+        contactListener = { route(navController, Routes.CONTACTS) },
         randomListener = {
             val intent = Intent(context, RandomActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

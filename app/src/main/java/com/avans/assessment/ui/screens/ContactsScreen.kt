@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import com.avans.assessment.ui.Routes
 import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.ContactListItem
 import com.avans.assessment.ui.components.general.Centered
@@ -55,6 +56,8 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
                 }
             }
             else -> {
+                contactsViewModel.loadContacts()
+
                 if (contactsViewModel.contacts.isEmpty()) {
                     Centered {
                         Text("No contacts")
@@ -63,7 +66,7 @@ fun ContactsScreen(context: Context, navController: NavHostController) {
                 }
 
                 Box(modifier = Modifier.fillMaxSize()) {
-                    LazyColumn() {
+                    LazyColumn {
                         items(contactsViewModel.contacts) {
                             ContactListItem(it)
                         }
@@ -87,7 +90,7 @@ private fun createRequestPermissionLauncher(
 
             // Reroute to current page to force checking the permission again and showing the data if changed.
             navController.popBackStack()
-            navController.navigate("contacts")
+            navController.navigate(Routes.CONTACTS)
         } else {
             Toast
                 .makeText(

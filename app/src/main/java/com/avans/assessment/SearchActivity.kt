@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.avans.assessment.ui.Routes
 import com.avans.assessment.ui.screens.DetailScreenWithoutBottom
 import com.avans.assessment.ui.screens.SearchScreen
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
@@ -22,9 +23,9 @@ class SearchActivity : AppCompatActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
 
-                    NavHost(navController, startDestination = "search") {
-                        composable("search") { SearchScreen(applicationContext, navController,intent.getStringExtra(Intent.EXTRA_TEXT) ?: "") }
-                        composable("detail/{id}") { entry -> DetailScreenWithoutBottom(applicationContext, navController, entry.arguments?.getString("id")) }
+                    NavHost(navController, startDestination = Routes.SEARCH) {
+                        composable(Routes.SEARCH) { SearchScreen(applicationContext, navController,intent.getStringExtra(Intent.EXTRA_TEXT) ?: "") }
+                        composable(Routes.DETAIL) { entry -> DetailScreenWithoutBottom(applicationContext, navController, entry.arguments?.getString("id")) }
                     }
                 }
             }

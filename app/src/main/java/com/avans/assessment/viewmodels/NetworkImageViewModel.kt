@@ -35,6 +35,5 @@ class NetworkImageViewModel(ctx: Context) : ApplicationViewModel() {
             error = noInternetException.message
             isFetching = false
         }
-
     }
 }
