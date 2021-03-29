@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.RandomActivity
+import com.avans.assessment.SettingsActivity
 
 @Composable
 fun BottomNavBar(context: Context, navController: NavHostController){
@@ -19,6 +20,11 @@ fun BottomNavBar(context: Context, navController: NavHostController){
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(context, intent, null)
         },
+        settingsListener = {
+            val intent = Intent(context, SettingsActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(context, intent, null)
+        }
     )
 }
 

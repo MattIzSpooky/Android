@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AndroidAssessment</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="pref_header">Beer Settings</string>
+    <string name="min_alcohol">Minimum Alcohol %</string>
 </resources>

@@ -16,9 +16,11 @@ import kotlin.jvm.Throws
 
 class BeerService(ctx: Context) : BaseService(ctx) {
     private val networkStatus = NetworkStatus(ctx)
+    private val settingsService = SettingsService(ctx);
 
     companion object {
         private const val NOTIFICATION_CHANNEL_ID = "test_notification_channel"
+        private const val PREFERENCE_KEY: String = "minimum_alcohol"
     }
 
     @Throws(NullPointerException::class, NoInternetException::class)
@@ -32,7 +34,12 @@ class BeerService(ctx: Context) : BaseService(ctx) {
 
         val client = ApiClient.getInstance(retrieveContextOrThrow())
 
-        val url = client.createUrl("?page=$page&per_page=$perPage")
+        val alcoholPreference = settingsService.getPreferenceByKey(PREFERENCE_KEY)
+
+        var alcoholPercentage = ""
+        if (alcoholPreference.isNotEmpty()) alcoholPercentage = "abv_gt=$alcoholPreference"
+
+        val url = client.createUrl("?$alcoholPercentage&page=$page&per_page=$perPage")
         val request = client.createGsonRequest<Array<Beer>>(url, onResponse = { beerArr ->
             onResponse(beerArr.toList())
         }, onError)
@@ -59,7 +66,7 @@ class BeerService(ctx: Context) : BaseService(ctx) {
     }
 
     @Throws(NullPointerException::class, NoInternetException::class)
-    fun fetchRandom(onResponse: (result: Beer) -> Unit,  onError: (result: String) -> Unit) {
+    fun fetchRandom(onResponse: (result: Beer) -> Unit, onError: (result: String) -> Unit) {
         if (!networkStatus.isConnected()) throw NoInternetException()
 
         val client = ApiClient.getInstance(retrieveContextOrThrow())
@@ -73,7 +80,11 @@ class BeerService(ctx: Context) : BaseService(ctx) {
     }
 
     @Throws(NullPointerException::class, NoInternetException::class)
-    fun search(beerName: String, onResponse: (result: List<Beer>) -> Unit, onError: (result: String) -> Unit) {
+    fun search(
+        beerName: String,
+        onResponse: (result: List<Beer>) -> Unit,
+        onError: (result: String) -> Unit
+    ) {
         if (!networkStatus.isConnected()) throw NoInternetException()
 
         val client = ApiClient.getInstance(retrieveContextOrThrow())
