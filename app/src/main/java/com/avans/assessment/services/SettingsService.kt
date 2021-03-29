@@ -4,12 +4,9 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import java.lang.ref.WeakReference
 
-class SettingsService(ctx: Context) {
-    private val context = WeakReference(ctx)
-
+class SettingsService(ctx: Context): BaseService(ctx) {
     fun getPreferenceByKey(key: String): String {
-        val pref = PreferenceManager.getDefaultSharedPreferences(context.get())
-
+        val pref = PreferenceManager.getDefaultSharedPreferences(retrieveContextOrThrow())
         return pref?.getString(key, "").toString()
     }
 }
