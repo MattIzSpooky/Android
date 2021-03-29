@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import com.avans.assessment.ui.Routes
 import com.avans.assessment.ui.components.BeerListItem
 import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.general.CenteredProgressIndicator
@@ -53,7 +54,7 @@ fun BeerList(context: Context, beerListViewModel: BeerListViewModel, navControll
             itemsIndexed(beers) { index, beer ->
                 key(beer.id) {
                     BeerListItem(context, beer, onClick = {
-                        navController.navigate("detail/${beer.id}")
+                        navController.navigate(Routes.compoundUrl(Routes.DETAIL, "id", it.id.toString()))
                     }, onDoubleTap = {
                         beerListViewModel.favoriteBeer(beer)
                     })

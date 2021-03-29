@@ -12,6 +12,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import com.avans.assessment.ui.Routes
 import com.avans.assessment.ui.components.BottomNavBar
 import com.avans.assessment.ui.components.general.Centered
 import com.avans.assessment.ui.components.FavoriteBeerListItem
@@ -63,7 +64,7 @@ fun FavoriteBeerList(
                     context,
                     favorite,
                     onClick = {
-                        navController.navigate("detail/${it.id}")
+                        navController.navigate(Routes.compoundUrl(Routes.DETAIL, "id", it.id.toString()))
                     },
                     onDoubleTap = favoriteBeersViewModel::unfavorite,
                     onLongPress = favoriteBeersViewModel::share

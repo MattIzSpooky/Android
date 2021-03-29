@@ -11,15 +11,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.avans.assessment.background.RandomBeerNotificationService
+import com.avans.assessment.ui.Routes
 import com.avans.assessment.ui.screens.ContactsScreen
 import com.avans.assessment.ui.screens.DetailScreen
 import com.avans.assessment.ui.screens.FavoriteScreen
 import com.avans.assessment.ui.screens.HomeScreen
 import com.avans.assessment.ui.theme.AvansandroidassessmentTheme
-import android.os.StrictMode.VmPolicy
-
-import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
 
 
 class HomeActivity : AppCompatActivity() {
@@ -38,11 +35,11 @@ class HomeActivity : AppCompatActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
 
-                    NavHost(navController, startDestination = "home") {
-                        composable("home") { HomeScreen(context, navController) }
-                        composable("favorites") { FavoriteScreen(context, navController) }
-                        composable("contacts") { ContactsScreen(context, navController) }
-                        composable("detail/{id}") { entry ->
+                    NavHost(navController, startDestination = Routes.HOME) {
+                        composable(Routes.HOME) { HomeScreen(context, navController) }
+                        composable(Routes.FAVORITES) { FavoriteScreen(context, navController) }
+                        composable(Routes.CONTACTS) { ContactsScreen(context, navController) }
+                        composable(Routes.DETAIL) { entry ->
                             DetailScreen(
                                 context,
                                 navController,

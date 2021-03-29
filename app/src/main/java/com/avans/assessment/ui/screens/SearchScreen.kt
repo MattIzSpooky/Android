@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.avans.assessment.models.Beer
+import com.avans.assessment.ui.Routes
 import com.avans.assessment.ui.components.BeerListItem
 import com.avans.assessment.ui.components.general.Centered
 import com.avans.assessment.ui.components.general.CenteredProgressIndicator
@@ -38,7 +39,7 @@ fun SearchScreen(context: Context, navController: NavHostController, searchText:
 
         Column(Modifier.fillMaxWidth()) {
             SearchList(context, searchViewModel) {
-                navController.navigate("detail/${it.id}")
+                navController.navigate(Routes.compoundUrl(Routes.DETAIL, "id", it.id.toString()))
             }
         }
     }
