@@ -22,7 +22,7 @@ class BeerListViewModel(ctx: Context) : ApplicationViewModel() {
         private set
 
     private var page = 1
-    private val perPage = 50
+    private val perPage = 30
     private var canLoadMore = true
 
     init {
