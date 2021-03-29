@@ -55,7 +55,6 @@ class RandomBeerNotificationService : Service() {
 
     override fun onDestroy() {
         timer.cancel();
-        serviceLooper?.quitSafely()
 
         super.onDestroy()
     }
