@@ -17,7 +17,7 @@ class RandomBeerNotificationService : Service() {
     private val timer = Timer()
 
     companion object {
-        private const val NOTIFICATION_INTERVAL = 5000L
+        private const val NOTIFICATION_INTERVAL = 60000L
     }
 
     override fun onCreate() {
